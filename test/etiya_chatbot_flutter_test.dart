@@ -62,11 +62,11 @@ void main() {
         build: () {
           when(
             () => _mockHttpClientRepository.sendMessage(
-              text: any<String>(),
-              senderId: any<String>(),
-              quickReplyTitle: any<String>(),
-              quickReplyPayload: any<String>(),
-              type: any<String>(),
+              text: any(named: 'text'),
+              senderId: any(named: 'senderId'),
+              quickReplyTitle: any(named: 'quickReplyTitle'),
+              quickReplyPayload: any(named: 'quickReplyPayload'),
+              type: any(named: 'type'),
             ),
           ).thenAnswer((_) async {});
           return chatbotCubit;
@@ -86,11 +86,11 @@ void main() {
         build: () {
           when(
             () => _mockHttpClientRepository.sendMessage(
-              text: any<String>(),
-              senderId: any<String>(),
-              quickReplyTitle: any<String>(),
-              quickReplyPayload: any<String>(),
-              type: any<String>(),
+              text: any(named: 'text'),
+              senderId: any(named: 'senderId'),
+              quickReplyTitle: any(named: 'quickReplyTitle'),
+              quickReplyPayload: any(named: 'quickReplyPayload'),
+              type: any(named: 'type'),
             ),
           ).thenAnswer((_) async {});
           return chatbotCubit;
@@ -115,11 +115,11 @@ void main() {
         build: () {
           when(
             () => _mockHttpClientRepository.sendMessage(
-              text: any<String>(),
-              senderId: any<String>(),
-              quickReplyTitle: any<String>(),
-              quickReplyPayload: any<String>(),
-              type: any<String>(),
+              text: any(named: 'text'),
+              senderId: any(named: 'senderId'),
+              quickReplyTitle: any(named: 'quickReplyTitle'),
+              quickReplyPayload: any(named: 'quickReplyPayload'),
+              type: any(named: 'type'),
             ),
           ).thenAnswer((_) async {});
           return chatbotCubit;
@@ -210,22 +210,22 @@ void main() {
       //   expect(chatbotCubit.state.messages.isNotEmpty, true);
       // });
 
-    //   blocTest<ChatbotCubit, ChatbotState>(
-    //     'should emit ChatbotMessages state when socket receives TEXT message',
-    //     build: () => chatbotCubit,
-    //     act: (_) => (_socketRepository as FakeSocketClientRepository)
-    //         .simulateTextMessageReceiveEvent("textMessageReceived"),
-    //     expect: () => [
-    //       ChatbotMessages(
-    //         messages: chatbotCubit.state.messages
-    //             .where(
-    //               (element) =>
-    //                   element.messageKind.text == 'textMessageReceived',
-    //             )
-    //             .toList(),
-    //       )
-    //     ],
-    //   );
+      //   blocTest<ChatbotCubit, ChatbotState>(
+      //     'should emit ChatbotMessages state when socket receives TEXT message',
+      //     build: () => chatbotCubit,
+      //     act: (_) => (_socketRepository as FakeSocketClientRepository)
+      //         .simulateTextMessageReceiveEvent("textMessageReceived"),
+      //     expect: () => [
+      //       ChatbotMessages(
+      //         messages: chatbotCubit.state.messages
+      //             .where(
+      //               (element) =>
+      //                   element.messageKind.text == 'textMessageReceived',
+      //             )
+      //             .toList(),
+      //       )
+      //     ],
+      //   );
     });
   });
 }

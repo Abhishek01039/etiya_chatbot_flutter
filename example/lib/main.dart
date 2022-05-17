@@ -139,15 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF00C2E7),
       ),
-      body: FutureBuilder(
-        future: widget._etiyaChatbot.getChatWidget(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return snapshot.data! as Widget;
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
-      ),
+      body: widget._etiyaChatbot.getChatWidget(),
     );
   }
 }

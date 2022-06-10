@@ -135,4 +135,10 @@ class ChatbotCubit extends Cubit<ChatbotState> {
       )
     ]);
   }
+
+  @override
+  Future<void> close() async {
+    socketRepository.dispose();
+    return super.close();
+  }
 }

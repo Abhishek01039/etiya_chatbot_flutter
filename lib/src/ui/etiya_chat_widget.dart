@@ -20,12 +20,6 @@ class _EtiyaChatWidgetState extends State<EtiyaChatWidget> {
   late Chat _chatView;
 
   @override
-  void dispose() {
-    super.dispose();
-    context.read<ChatbotCubit>().dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChatbotCubit, ChatbotState>(
       listener: (context, state) {

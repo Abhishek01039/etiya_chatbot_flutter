@@ -60,15 +60,25 @@ class ChatbotCubit extends Cubit<ChatbotState> {
       ..onError((handler) => Log.error(handler as String? ?? 'Error'))
       ..onConnect((handler) async {
         Log.info('socketRepository.onSocketConnected (visitorId=$visitorId)');
-        await httpClientRepository.sendMessage(
-          text: '/user_visit',
-          senderId: visitorId,
-        );
+        await userVisitMessage();
       })
       ..connect();
   }
 
-  void dispose() => socketRepository.dispose();
+  Future<void> userVisitMessage() async {
+    await httpClientRepository.sendMessage(
+      text: '/user_visit',
+      senderId: visitorId,
+    );
+  }
+
+  Future<void> closeSessionMessage() async {
+    await httpClientRepository.sendMessage(
+      text: '/close-session',
+      senderId: visitorId,
+    );
+    Log.info('Chat Session is closed');
+  }
 
   void _insertNewMessages(List<Message> messages) {
     final updatedMessages = [...state.messages];
@@ -148,5 +158,12 @@ class ChatbotCubit extends Cubit<ChatbotState> {
         chatUser: _customerUser,
       )
     ]);
+  }
+
+  @override
+  Future<void> close() async {
+    socketRepository.dispose();
+    await closeSessionMessage();
+    return super.close();
   }
 }

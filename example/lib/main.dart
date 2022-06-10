@@ -2,19 +2,39 @@ import 'package:etiya_chatbot_flutter/etiya_chatbot_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:togg_mobile_super_app_sdk/togg_mobile_super_app_sdk.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const App());
 
-class MyApp extends StatelessWidget {
-  const MyApp({
-    Key? key,
-  }) : super(key: key);
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Etiya Chatbot',
-      home: MyHomePage(),
+      home: InitialScreen(),
+    );
+  }
+}
+
+class InitialScreen extends StatelessWidget {
+  const InitialScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => MyHomePage(),
+              ),
+            );
+          },
+          child: const Text("Open Chatbot"),
+        ),
+      ),
     );
   }
 }

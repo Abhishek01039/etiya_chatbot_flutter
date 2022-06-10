@@ -46,15 +46,17 @@ class ChatbotCubit extends Cubit<ChatbotState> {
       ..onError((handler) => Log.error(handler as String? ?? 'Error'))
       ..onConnect((handler) async {
         Log.info('socketRepository.onSocketConnected (visitorId=$visitorId)');
-        await httpClientRepository.sendMessage(
-          text: '/user_visit',
-          senderId: visitorId,
-        );
+        await userVisitMessage();
       })
       ..connect();
   }
 
-  void dispose() => socketRepository.dispose();
+  Future<void> userVisitMessage() async {
+    await httpClientRepository.sendMessage(
+      text: '/user_visit',
+      senderId: visitorId,
+    );
+  }
 
   void _insertNewMessages(List<Message> messages) {
     final updatedMessages = [...state.messages];

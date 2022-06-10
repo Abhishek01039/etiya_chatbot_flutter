@@ -58,6 +58,14 @@ class ChatbotCubit extends Cubit<ChatbotState> {
     );
   }
 
+  Future<void> closeSessionMessage() async {
+    await httpClientRepository.sendMessage(
+      text: '/close-session',
+      senderId: visitorId,
+    );
+    Log.info('Chat Session is closed');
+  }
+
   void _insertNewMessages(List<Message> messages) {
     final updatedMessages = [...state.messages];
     updatedMessages.insertAll(0, messages);
@@ -141,6 +149,7 @@ class ChatbotCubit extends Cubit<ChatbotState> {
   @override
   Future<void> close() async {
     socketRepository.dispose();
+    await closeSessionMessage();
     return super.close();
   }
 }

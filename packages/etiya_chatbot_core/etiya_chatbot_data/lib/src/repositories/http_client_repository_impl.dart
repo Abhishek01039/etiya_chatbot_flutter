@@ -60,8 +60,7 @@ class HttpClientRepositoryImpl extends HttpClientRepository {
     String type = 'text',
     required String text,
     required String senderId,
-    String? quickReplyTitle,
-    String? quickReplyPayload,
+    MessageData? data,
   }) async {
     try {
       final toggUser = TOGGMobileSdk().getTOGGUser();
@@ -81,10 +80,7 @@ class HttpClientRepositoryImpl extends HttpClientRepository {
             language: toggUser.language,
           ),
           type: type,
-          data: QuickReply(
-            title: quickReplyTitle,
-            payload: quickReplyPayload,
-          ),
+          data: data,
           accessToken: accessToken,
         ).toJson(),
       );

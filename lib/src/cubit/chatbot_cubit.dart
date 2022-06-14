@@ -54,7 +54,11 @@ class ChatbotCubit extends Cubit<ChatbotState> {
           messageResponse.user?.fullName = chatbotBuilder.userName;
           messageResponse.user?.avatar = chatbotBuilder.incomingAvatar;
           Log.info(messageResponse.toJson().toString());
-          _insertNewMessages(messageResponse.mapToChatMessage());
+          if (messageResponse.type == 'feedback') {
+            emit(ChatbotSessionEnded(state.messages, messageResponse));
+          } else {
+            _insertNewMessages(messageResponse.mapToChatMessage());
+          }
         }
       })
       ..onError((handler) => Log.error(handler as String? ?? 'Error'))
@@ -112,8 +116,10 @@ class ChatbotCubit extends Cubit<ChatbotState> {
       text: item.payload ?? "payload",
       senderId: visitorId,
       type: 'quick_reply',
-      quickReplyTitle: item.title,
-      quickReplyPayload: item.payload,
+      data: MessageData(
+        title: item.title,
+        payload: item.payload,
+      ),
     );
     _insertNewMessages([
       EtiyaChatMessage(
@@ -140,6 +146,24 @@ class ChatbotCubit extends Cubit<ChatbotState> {
       )
     ]);
   }
+
+  /// Triggered when user submits feedback
+  Future<void> userSubmittedFeedbackMessage({
+    required double ratingScore,
+    required int sessionId,
+    String? feedback,
+  }) async =>
+      httpClientRepository.sendMessage(
+        text: '',
+        senderId: visitorId,
+        type: 'feedback',
+        data: MessageData(
+          feedbackExist: true,
+          comment: feedback,
+          rate: ratingScore.toInt().toString(),
+          sessionId: sessionId,
+        ),
+      );
 
   Future<void> authenticate({
     required String username,

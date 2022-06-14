@@ -41,5 +41,17 @@ void main() {
       expect(messageResponse.rawMessage?.data?.payload?.elements?.length, 3);
       expect(messageResponse.rawMessage?.data?.payload?.elements?.first.buttons?.first == null, false);
     });
+
+    test('carousel message pojo mapping', () async {
+      final carouselMessageResponseJson =
+      File('test/mock/data/feedback_message_response.json');
+      final MessageResponse messageResponse = MessageResponse.fromJson(
+        jsonDecode(
+          await carouselMessageResponseJson.readAsString(),
+        ) as Map<String, dynamic>,
+      );
+      expect(messageResponse.rawMessage?.data?.payload?.thank?.isEmpty, false);
+      expect(messageResponse.rawMessage?.data?.payload?.title?.isEmpty, false);
+    });
   });
 }

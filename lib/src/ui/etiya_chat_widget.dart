@@ -1,12 +1,13 @@
 import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
+import 'package:etiya_chatbot_flutter/etiya_chatbot_flutter.dart';
 import 'package:etiya_chatbot_flutter/src/cubit/chatbot_cubit.dart';
+import 'package:etiya_chatbot_flutter/src/presentation/widgets/conversation_feedback.dart';
 import 'package:etiya_chatbot_flutter/src/ui/etiya_message_input.dart';
 import 'package:etiya_chatbot_flutter/src/ui/image_viewer.dart';
 import 'package:etiya_chatbot_flutter/src/ui/login_sheet.dart';
 import 'package:etiya_chatbot_flutter/src/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:swifty_chat/swifty_chat.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EtiyaChatWidget extends StatefulWidget {
@@ -25,6 +26,19 @@ class _EtiyaChatWidgetState extends State<EtiyaChatWidget> {
       listener: (context, state) {
         if (state is ChatbotMessages) {
           _chatView.scrollToBottom();
+        } else if (state is ChatbotSessionEnded) {
+          showDialog(
+            context: context,
+            builder: (ctx) {
+              return BlocProvider.value(
+                value: context.read<ChatbotCubit>(),
+                child: ConversationFeedback(
+                  state.message,
+                  theme: context.read<ChatTheme>(),
+                ),
+              );
+            },
+          );
         }
       },
       builder: (context, state) {

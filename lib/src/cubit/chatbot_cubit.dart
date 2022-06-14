@@ -102,8 +102,10 @@ class ChatbotCubit extends Cubit<ChatbotState> {
       text: item.payload ?? "payload",
       senderId: visitorId,
       type: 'quick_reply',
-      quickReplyTitle: item.title,
-      quickReplyPayload: item.payload,
+      data: MessageData(
+        title: item.title,
+        payload: item.payload,
+      ),
     );
     _insertNewMessages([
       EtiyaChatMessage(

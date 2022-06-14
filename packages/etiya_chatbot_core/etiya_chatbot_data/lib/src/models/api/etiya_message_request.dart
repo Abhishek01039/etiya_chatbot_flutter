@@ -1,4 +1,5 @@
 import 'package:etiya_chatbot_data/src/models/models.dart';
+import 'package:etiya_chatbot_domain/etiya_chatbot_domain.dart';
 
 class MessageUser {
   MessageUser({required this.senderId});
@@ -19,7 +20,7 @@ class MessageRequest {
   final String type;
   final String text;
   final MessageUser user;
-  final QuickReply? data;
+  final MessageData? data;
 
   Map<String, dynamic> toJson() => {
         "type": type,

@@ -199,6 +199,9 @@ class Element {
         "picture": picture,
         "subtitle": subtitle,
       };
+
+  @override
+  toString() => toJson().toString();
 }
 
 // MARK: - CarouselButton 👍🏻
@@ -207,20 +210,27 @@ class CarouselButton {
     this.url,
     this.title,
     this.payload,
+    this.value,
   });
 
   String? url;
   String? title;
   String? payload;
+  String? value;
 
   factory CarouselButton.fromJson(Map<String, dynamic> json) => CarouselButton(
         url: json["url"] as String?,
         title: json["title"] as String?,
         payload: json["payload"] as String?,
+        value: json["value"] as String?,
       );
 
-  Map<String, dynamic> toJson() =>
-      {"url": url, "title": title, "payload": payload};
+  Map<String, dynamic> toJson() => {
+        "url": url,
+        "title": title,
+        "payload": payload,
+        "value": value,
+      };
 }
 
 // MARK: - QuickReply 👍🏻
@@ -247,6 +257,9 @@ class Payload {
     this.elements,
     this.mime,
     this.url,
+    this.text,
+    this.thank,
+    this.title,
   });
 
   int? typing;
@@ -256,6 +269,9 @@ class Payload {
   List<Element>? elements;
   String? mime;
   String? url;
+  String? text;
+  String? thank;
+  String? title;
 
   factory Payload.fromJson(Map<String, dynamic> json) => Payload(
         typing: json["typing"] as int?,
@@ -277,6 +293,9 @@ class Payload {
               ),
         mime: json["mime"] as String?,
         url: json["url"] as String?,
+        text: json["text"] as String?,
+        thank: json["thank"] as String?,
+        title: json["title"] as String?,
       );
 
   Map<String, dynamic> toJson() => {
@@ -286,7 +305,10 @@ class Payload {
         "quick_replies": quickReplies,
         "elements": elements,
         "mime": mime,
-        "url": url
+        "url": url,
+        "text": text,
+        "thank": thank,
+        "title": title,
       };
 }
 

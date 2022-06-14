@@ -57,8 +57,7 @@ class HttpClientRepositoryImpl extends HttpClientRepository {
     String type = 'text',
     required String text,
     required String senderId,
-    String? quickReplyTitle,
-    String? quickReplyPayload,
+    MessageData? data,
   }) async {
     try {
       final response = await http.post(
@@ -66,12 +65,14 @@ class HttpClientRepositoryImpl extends HttpClientRepository {
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
-        body: jsonEncode(MessageRequest(
-          text: text,
-          user: MessageUser(senderId: senderId),
-          type: type,
-          data: QuickReply(title: quickReplyTitle, payload: quickReplyPayload)
-        ).toJson()),
+        body: jsonEncode(
+          MessageRequest(
+            text: text,
+            user: MessageUser(senderId: senderId),
+            type: type,
+            data: data,
+          ).toJson(),
+        ),
       );
       if (response.statusCode >= 200 && response.statusCode <= 300) {
         // Log.info("User's message sent successfully");

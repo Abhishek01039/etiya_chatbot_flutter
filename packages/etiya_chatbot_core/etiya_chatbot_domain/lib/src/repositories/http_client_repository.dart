@@ -1,3 +1,5 @@
+import 'package:etiya_chatbot_domain/etiya_chatbot_domain.dart';
+
 abstract class HttpClientRepository {
   final String serviceUrl;
   final String authUrl;
@@ -23,7 +25,6 @@ abstract class HttpClientRepository {
     String type = 'text',
     required String text,
     required String senderId,
-    String? quickReplyTitle,
-    String? quickReplyPayload,
+    MessageData? data,
   });
 }

@@ -133,6 +133,24 @@ class ChatbotCubit extends Cubit<ChatbotState> {
     ]);
   }
 
+  /// Triggered when user submits feedback
+  Future<void> userSubmittedFeedbackMessage({
+    required double ratingScore,
+    required int sessionId,
+    String? feedback,
+  }) async =>
+      httpClientRepository.sendMessage(
+        text: '',
+        senderId: visitorId,
+        type: 'feedback',
+        data: MessageData(
+          feedbackExist: true,
+          comment: feedback,
+          rate: ratingScore.toInt().toString(),
+          sessionId: sessionId,
+        ),
+      );
+
   Future<void> authenticate({
     required String username,
     required String password,

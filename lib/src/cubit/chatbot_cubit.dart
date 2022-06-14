@@ -40,7 +40,11 @@ class ChatbotCubit extends Cubit<ChatbotState> {
           messageResponse.user?.fullName = chatbotBuilder.userName;
           messageResponse.user?.avatar = chatbotBuilder.incomingAvatar;
           Log.info(messageResponse.toJson().toString());
-          _insertNewMessages(messageResponse.mapToChatMessage());
+          if (messageResponse.type == 'feedback') {
+            emit(ChatbotSessionEnded(state.messages, messageResponse));
+          } else {
+            _insertNewMessages(messageResponse.mapToChatMessage());
+          }
         }
       })
       ..onError((handler) => Log.error(handler as String? ?? 'Error'))

@@ -18,11 +18,23 @@ class ChatbotMessages extends ChatbotState {
 }
 
 class ChatbotUserAuthenticated extends ChatbotState {
-  final bool isAuthenticated;
-
   // ignore: avoid_positional_boolean_parameters
   const ChatbotUserAuthenticated(this.isAuthenticated);
 
+  final bool isAuthenticated;
+
   @override
   List<Object?> get props => [messages, isAuthenticated];
+}
+
+class ChatbotSessionEnded extends ChatbotState {
+  const ChatbotSessionEnded(
+    List<Message> messages,
+    this.message,
+  ) : super(messages: messages);
+
+  final MessageResponse message;
+
+  @override
+  List<Object?> get props => [messages, message];
 }

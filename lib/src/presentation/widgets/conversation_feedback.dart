@@ -97,17 +97,17 @@ class ConversationFeedbackState extends State<ConversationFeedback>
                   const SizedBox(height: 16),
                   RatingBar.builder(
                     itemPadding: const EdgeInsets.symmetric(horizontal: 4),
-                    initialRating: 3,
+                    initialRating: 5,
                     itemBuilder: (context, index) {
                       switch (index) {
                         case 0:
                           return const FaIcon(
-                            FontAwesomeIcons.faceSadCry,
+                            FontAwesomeIcons.faceFrownOpen,
                             color: Color(0xFFE12125),
                           );
                         case 1:
                           return const FaIcon(
-                            FontAwesomeIcons.faceSadTear,
+                            FontAwesomeIcons.faceFrown,
                             color: Color(0xFFF25A29),
                           );
                         case 2:
@@ -117,12 +117,12 @@ class ConversationFeedbackState extends State<ConversationFeedback>
                           );
                         case 3:
                           return const FaIcon(
-                            FontAwesomeIcons.faceSmileBeam,
+                            FontAwesomeIcons.faceSmile,
                             color: Color(0xFF91CA61),
                           );
                         case 4:
                           return const FaIcon(
-                            FontAwesomeIcons.faceGrinStars,
+                            FontAwesomeIcons.faceGrin,
                             color: Color(0xFF3AB54B),
                           );
                         default:

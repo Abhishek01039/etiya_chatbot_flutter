@@ -1,5 +1,6 @@
 import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
 import 'package:etiya_chatbot_flutter/src/cubit/chatbot_cubit.dart';
+import 'package:etiya_chatbot_flutter/src/localization/localization.dart';
 import 'package:etiya_chatbot_flutter/src/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -169,7 +170,7 @@ class ConversationFeedbackState extends State<ConversationFeedback>
                       Navigator.of(context).pop();
                     },
                     style: widget.theme.carouselButtonStyle,
-                    child: const Text('Submit'),
+                    child: Text(context.localization.submit),
                   ),
                   const Spacer(),
                 ],

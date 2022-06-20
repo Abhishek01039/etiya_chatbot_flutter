@@ -1,3 +1,4 @@
+import 'package:etiya_chatbot_flutter/src/localization/localization.dart';
 import 'package:flutter/material.dart';
 
 extension EmailValidator on String {
@@ -39,15 +40,15 @@ class _LoginSheetState extends State<LoginSheet> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (input) => (input?.isValidEmail() ?? false)
                       ? null
-                      : "Enter valid email",
+                      : context.localization.enter_valid_email,
                   autofocus: true,
                   autocorrect: false,
                   enableSuggestions: false,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: 'Email Address',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.email),
+                  decoration: InputDecoration(
+                    labelText: context.localization.email_address,
+                    border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.email),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -56,10 +57,10 @@ class _LoginSheetState extends State<LoginSheet> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (input) => (input?.isNotEmpty ?? false)
                       ? null
-                      : "Enter non-empty password",
+                      : context.localization.enter_non_empty_password,
                   obscureText: _isObscure,
                   decoration: InputDecoration(
-                    labelText: 'Password',
+                    labelText: context.localization.password,
                     border: const OutlineInputBorder(),
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
@@ -92,9 +93,9 @@ class _LoginSheetState extends State<LoginSheet> {
                       }
                     },
                     color: Colors.blue,
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(
+                    child: Text(
+                      context.localization.login,
+                      style: const TextStyle(
                         fontSize: 19,
                         color: Colors.white,
                       ),

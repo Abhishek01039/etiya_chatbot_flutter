@@ -37,21 +37,6 @@ class L10n {
     }
   }
 
-  /// Get the flag by language code
-  static String getFlag(String code) {
-    switch (code) {
-      case 'ar':
-        return '🇦🇪';
-      case 'es':
-        return '🇪🇸';
-      case 'de':
-        return '🇩🇪';
-      case 'en':
-      default:
-        return '🇺🇸';
-    }
-  }
-
   static L10n get(String value) => values.firstWhere(
         (it) => it.value.toLowerCase().startsWith(value.toLowerCase()),
         orElse: () => values.first,

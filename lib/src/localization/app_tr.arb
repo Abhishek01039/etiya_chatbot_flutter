@@ -1,8 +1,8 @@
 {
   "submit": "Gönder",
-  "enter_valid_email": "Geçerli e-posta girin",
-  "email_address": "E-posta Adresi",
-  "enter_non_empty_password": "Boş olmayan şifreyi girin",
+  "enter_valid_email": "Geçerli bir email giriniz",
+  "email_address": "Email Adresi",
+  "enter_non_empty_password": "Lütfen şifre alanını boş bırakmayınız",
   "password": "Şifre",
-  "login": "Giriş yapmak"
+  "login": "Giriş"
 }

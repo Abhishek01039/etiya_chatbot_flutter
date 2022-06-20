@@ -1,9 +1,9 @@
 import 'package:etiya_chatbot_flutter/src/localization/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-class ToggPluginAppLocalizationsDelegate
+class ChatBotAppLocalizationsDelegate
     extends LocalizationsDelegate<AppLocalizations> {
-  const ToggPluginAppLocalizationsDelegate();
+  const ChatBotAppLocalizationsDelegate();
 
   static late AppLocalizations instance;
 
@@ -14,7 +14,7 @@ class ToggPluginAppLocalizationsDelegate
   @override
   Future<AppLocalizations> load(Locale locale) async {
     final _instance = await AppLocalizations.delegate.load(locale);
-    ToggPluginAppLocalizationsDelegate.instance = _instance;
+    ChatBotAppLocalizationsDelegate.instance = _instance;
     return instance;
   }
 

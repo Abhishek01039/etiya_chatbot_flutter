@@ -11,17 +11,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get submit => 'Gönder';
 
   @override
-  String get enter_valid_email => 'Geçerli e-posta girin';
+  String get enter_valid_email => 'Geçerli bir email giriniz';
 
   @override
-  String get email_address => 'E-posta Adresi';
+  String get email_address => 'Email Adresi';
 
   @override
-  String get enter_non_empty_password => 'Boş olmayan şifreyi girin';
+  String get enter_non_empty_password => 'Lütfen şifre alanını boş bırakmayınız';
 
   @override
   String get password => 'Şifre';
 
   @override
-  String get login => 'Giriş yapmak';
+  String get login => 'Giriş';
 }

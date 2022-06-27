@@ -20,7 +20,7 @@
 
 See [the readme of example project](example/README.md)
 
-### Localisation
+### Localization
 
 We have enabled the Localization for chatbot. As soon as we run `flutter pub get`, it will generate the code inside `flutter_gen` directory.
 

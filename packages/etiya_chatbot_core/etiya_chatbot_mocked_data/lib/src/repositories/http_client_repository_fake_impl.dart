@@ -24,6 +24,7 @@ class FakeHttpClientRepository extends HttpClientRepository {
 
   @override
   Future<void> sendMessage({
+    MessageData? data,
     String type = 'text',
     required String text,
     required String senderId,

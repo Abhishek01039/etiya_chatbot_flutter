@@ -13,6 +13,9 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Etiya Chatbot',
       home: InitialScreen(),
+      localizationsDelegates: [
+        ChatBotAppLocalizationsDelegate(),
+      ],
     );
   }
 }

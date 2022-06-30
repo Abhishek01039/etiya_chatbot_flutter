@@ -52,134 +52,142 @@ class ConversationFeedbackState extends State<ConversationFeedback>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
-      child: Center(
-        child: Material(
-          color: Colors.transparent,
-          child: ScaleTransition(
-            scale: scaleAnimation,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.5,
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+      child: AnimatedContainer(
+        padding: MediaQuery.of(context).viewInsets,
+        duration: const Duration(milliseconds: 300),
+        child: Center(
+          child: Material(
+            color: Colors.transparent,
+            child: ScaleTransition(
+              scale: scaleAnimation,
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.height * 0.5,
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 44,
-                    color: widget.theme.primaryColor,
-                    child: Row(
-                      children: [
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          icon: const Icon(
-                            Icons.close,
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                  _ConversationFeedbackTitle(
-                    title:
-                        widget.message.rawMessage?.data?.payload?.title ?? '',
-                    textStyle:
-                        widget.theme.incomingMessageBodyTextStyle.copyWith(
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  RatingBar.builder(
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 4),
-                    initialRating: 5,
-                    itemBuilder: (context, index) {
-                      switch (index) {
-                        case 0:
-                          return const FaIcon(
-                            FontAwesomeIcons.faceFrownOpen,
-                            color: Color(0xFFE12125),
-                          );
-                        case 1:
-                          return const FaIcon(
-                            FontAwesomeIcons.faceFrown,
-                            color: Color(0xFFF25A29),
-                          );
-                        case 2:
-                          return const FaIcon(
-                            FontAwesomeIcons.faceMeh,
-                            color: Color(0xFFFCB040),
-                          );
-                        case 3:
-                          return const FaIcon(
-                            FontAwesomeIcons.faceSmile,
-                            color: Color(0xFF91CA61),
-                          );
-                        case 4:
-                          return const FaIcon(
-                            FontAwesomeIcons.faceGrin,
-                            color: Color(0xFF3AB54B),
-                          );
-                        default:
-                          return const FaIcon(FontAwesomeIcons.faceSadTear);
-                      }
-                    },
-                    onRatingUpdate: (double value) {
-                      Log.info('onRatingUpdate = $value');
-                      ratingScore = value;
-                    },
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Material(
-                      elevation: 4,
-                      shadowColor: Colors.grey,
-                      borderRadius: BorderRadius.circular(8),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color(0xffB81E12),
-                              width: 2,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 44,
+                      color: widget.theme.primaryColor,
+                      child: Row(
+                        children: [
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              context.read<ChatbotCubit>().clearSession();
+                              Navigator.of(context).pop();
+                            },
+                            icon: const Icon(
+                              Icons.close,
+                              color: Colors.white,
                             ),
-                          ),
-                        ),
-                        controller: feedbackTextController,
-                        keyboardType: TextInputType.multiline,
-                        minLines: 1,
-                        maxLines: 7,
+                          )
+                        ],
                       ),
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      context.read<ChatbotCubit>().userSubmittedFeedbackMessage(
-                            ratingScore: ratingScore,
-                            feedback: feedbackTextController.text,
-                            sessionId:
-                                int.tryParse(widget.message.sessionId ?? '') ??
-                                    0,
-                          );
-                      Navigator.of(context).pop();
-                    },
-                    style: widget.theme.carouselButtonStyle,
-                    child: Text(context.localization.submit),
-                  ),
-                  const Spacer(),
-                ],
+                    const Spacer(),
+                    _ConversationFeedbackTitle(
+                      title:
+                          widget.message.rawMessage?.data?.payload?.title ?? '',
+                      textStyle:
+                          widget.theme.incomingMessageBodyTextStyle.copyWith(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    RatingBar.builder(
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+                      initialRating: 5,
+                      itemBuilder: (context, index) {
+                        switch (index) {
+                          case 0:
+                            return const FaIcon(
+                              FontAwesomeIcons.faceFrownOpen,
+                              color: Color(0xFFE12125),
+                            );
+                          case 1:
+                            return const FaIcon(
+                              FontAwesomeIcons.faceFrown,
+                              color: Color(0xFFF25A29),
+                            );
+                          case 2:
+                            return const FaIcon(
+                              FontAwesomeIcons.faceMeh,
+                              color: Color(0xFFFCB040),
+                            );
+                          case 3:
+                            return const FaIcon(
+                              FontAwesomeIcons.faceSmile,
+                              color: Color(0xFF91CA61),
+                            );
+                          case 4:
+                            return const FaIcon(
+                              FontAwesomeIcons.faceGrin,
+                              color: Color(0xFF3AB54B),
+                            );
+                          default:
+                            return const FaIcon(FontAwesomeIcons.faceSadTear);
+                        }
+                      },
+                      onRatingUpdate: (double value) {
+                        Log.info('onRatingUpdate = $value');
+                        ratingScore = value;
+                      },
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      child: Material(
+                        elevation: 4,
+                        shadowColor: Colors.grey,
+                        borderRadius: BorderRadius.circular(8),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                color: Color(0xffB81E12),
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                          controller: feedbackTextController,
+                          keyboardType: TextInputType.multiline,
+                          minLines: 1,
+                          maxLines: 7,
+                          textInputAction: TextInputAction.send,
+                          onSubmitted: (_) => sendFeedback(),
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => sendFeedback(),
+                      style: widget.theme.carouselButtonStyle,
+                      child: Text(context.localization.submit),
+                    ),
+                    const Spacer(),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> sendFeedback() async {
+    context.read<ChatbotCubit>().userSubmittedFeedbackMessage(
+          ratingScore: ratingScore,
+          feedback: feedbackTextController.text,
+          sessionId: int.tryParse(widget.message.sessionId ?? '') ?? 0,
+        );
+    Navigator.of(context).pop();
   }
 }
 

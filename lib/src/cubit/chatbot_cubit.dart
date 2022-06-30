@@ -64,19 +64,19 @@ class ChatbotCubit extends Cubit<ChatbotState> {
       ..onError((handler) => Log.error(handler as String? ?? 'Error'))
       ..onConnect((handler) async {
         Log.info('socketRepository.onSocketConnected (visitorId=$visitorId)');
-        await userVisitMessage();
+        await _sendUserVisitMessage();
       })
       ..connect();
   }
 
-  Future<void> userVisitMessage() async {
+  Future<void> _sendUserVisitMessage() async {
     await httpClientRepository.sendMessage(
       text: '/user_visit',
       senderId: visitorId,
     );
   }
 
-  Future<void> closeSessionMessage() async {
+  Future<void> _sendCloseSessionMessage() async {
     await httpClientRepository.sendMessage(
       text: '/close-session',
       senderId: visitorId,
@@ -91,6 +91,8 @@ class ChatbotCubit extends Cubit<ChatbotState> {
       ChatbotMessages(messages: updatedMessages),
     );
   }
+
+  void _cleanAllMessages() => emit(const ChatbotMessages());
 
   /// Triggered when user fills message input field.
   Future<void> userAddedMessage(String messageText) async {
@@ -152,18 +154,26 @@ class ChatbotCubit extends Cubit<ChatbotState> {
     required double ratingScore,
     required int sessionId,
     String? feedback,
-  }) async =>
-      httpClientRepository.sendMessage(
-        text: '',
-        senderId: visitorId,
-        type: 'feedback',
-        data: MessageData(
-          feedbackExist: true,
-          comment: feedback,
-          rate: ratingScore.toInt().toString(),
-          sessionId: sessionId,
-        ),
-      );
+  }) async {
+    await httpClientRepository.sendMessage(
+      text: feedback ?? 'empty_text',
+      senderId: visitorId,
+      type: 'feedback',
+      data: MessageData(
+        feedbackExist: true,
+        comment: feedback,
+        rate: ratingScore.toInt().toString(),
+        sessionId: sessionId,
+      ),
+    );
+    await clearSession();
+  }
+
+  Future<void> clearSession() async {
+    _cleanAllMessages();
+    await _sendCloseSessionMessage();
+    await _sendUserVisitMessage();
+  }
 
   Future<void> authenticate({
     required String username,
@@ -187,7 +197,7 @@ class ChatbotCubit extends Cubit<ChatbotState> {
   @override
   Future<void> close() async {
     socketRepository.dispose();
-    await closeSessionMessage();
+    await _sendCloseSessionMessage();
     return super.close();
   }
 }

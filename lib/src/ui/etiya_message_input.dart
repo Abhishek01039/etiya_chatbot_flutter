@@ -44,11 +44,11 @@ class EtiyaMessageInput extends StatelessWidget {
                   color: Color(0xffAEA4A3),
                 ),
               ),
-              textInputAction: TextInputAction.send,
               style: const TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
               ),
+              textInputAction: TextInputAction.send,
               onSubmitted: (_) {
                 sendButtonTapped(textEditingController.text);
                 textEditingController.text = "";

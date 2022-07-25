@@ -4,7 +4,7 @@ version: 1.0.0
 publish_to: none
 
 environment:
-  sdk: '>=2.17.3 <3.0.0'
+  sdk: '>=2.16.2 <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
@@ -20,8 +20,10 @@ dependencies:
   http: ^0.13.4
   logger: ^1.1.0
   shared_preferences: ^2.0.15
-  socket_io_client: ^2.0.0-beta.4-nullsafety.0
-  swifty_chat_data: ^0.1.0
+  socket_io_client: ^2.0.0
+#  swifty_chat_data: ^0.1.0
+  # https://pub.dev/packages/swifty_chat
+  swifty_chat: ^1.2.0
 
   togg_mobile_super_app_sdk:
     git:
@@ -33,4 +35,4 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.1
+  flutter_lints: ^1.0.4

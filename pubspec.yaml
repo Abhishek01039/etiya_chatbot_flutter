@@ -16,21 +16,21 @@ dependencies:
     git:
       url: https://github.com/Etiya/etiya_chatbot_flutter
       path: packages/etiya_chatbot_core/etiya_chatbot_data
-      ref: customer/togg
+      ref: customer/togg-flutter-v2.10.5
 #    path: packages/etiya_chatbot_core/etiya_chatbot_data
 
   etiya_chatbot_domain:
     git:
       url: https://github.com/Etiya/etiya_chatbot_flutter
       path: packages/etiya_chatbot_core/etiya_chatbot_domain
-      ref: customer/togg
+      ref: customer/togg-flutter-v2.10.5
 #    path: packages/etiya_chatbot_core/etiya_chatbot_domain
 
   etiya_chatbot_mocked_data:
     git:
       url: https://github.com/Etiya/etiya_chatbot_flutter
       path: packages/etiya_chatbot_core/etiya_chatbot_mocked_data
-      ref: customer/togg
+      ref: customer/togg-flutter-v2.10.5
 #    path: packages/etiya_chatbot_core/etiya_chatbot_mocked_data
 
   flutter:

@@ -14,7 +14,7 @@ dependencies:
     git:
       url: https://github.com/Etiya/etiya_chatbot_flutter
       path: packages/etiya_chatbot_core/etiya_chatbot_domain
-      ref: customer/togg
+      ref: customer/togg-flutter-v2.10.5
 #    path: ../etiya_chatbot_domain
 
   http: ^0.13.4

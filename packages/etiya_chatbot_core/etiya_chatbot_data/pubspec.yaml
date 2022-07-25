@@ -28,7 +28,7 @@ dependencies:
   togg_mobile_super_app_sdk:
     git:
       url: https://gitlab.togg.com.tr/digitalplatform/togg-mobile/mobile-super-app/togg_mobile_superapp_sdk
-      ref: main
+      ref: feat/flutter-v2.10.5
 
   uuid: ^3.0.6
 

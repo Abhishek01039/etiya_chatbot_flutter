@@ -228,16 +228,20 @@ packages:
   etiya_chatbot_data:
     dependency: transitive
     description:
-      path: "../packages/etiya_chatbot_core/etiya_chatbot_data"
-      relative: true
-    source: path
+      path: "packages/etiya_chatbot_core/etiya_chatbot_data"
+      ref: "customer/togg-flutter-v2.10.5"
+      resolved-ref: "46b1b593c86d8716e3e0dafb9d0f9c89c3d1eed4"
+      url: "https://github.com/Etiya/etiya_chatbot_flutter"
+    source: git
     version: "1.0.0"
   etiya_chatbot_domain:
     dependency: transitive
     description:
-      path: "../packages/etiya_chatbot_core/etiya_chatbot_domain"
-      relative: true
-    source: path
+      path: "packages/etiya_chatbot_core/etiya_chatbot_domain"
+      ref: "customer/togg-flutter-v2.10.5"
+      resolved-ref: "46b1b593c86d8716e3e0dafb9d0f9c89c3d1eed4"
+      url: "https://github.com/Etiya/etiya_chatbot_flutter"
+    source: git
     version: "1.0.0"
   etiya_chatbot_flutter:
     dependency: "direct main"
@@ -249,9 +253,11 @@ packages:
   etiya_chatbot_mocked_data:
     dependency: transitive
     description:
-      path: "../packages/etiya_chatbot_core/etiya_chatbot_mocked_data"
-      relative: true
-    source: path
+      path: "packages/etiya_chatbot_core/etiya_chatbot_mocked_data"
+      ref: "customer/togg-flutter-v2.10.5"
+      resolved-ref: "46b1b593c86d8716e3e0dafb9d0f9c89c3d1eed4"
+      url: "https://github.com/Etiya/etiya_chatbot_flutter"
+    source: git
     version: "1.0.0"
   fake_async:
     dependency: transitive

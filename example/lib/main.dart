@@ -138,7 +138,7 @@ class MyHomePage extends StatefulWidget {
         ),
       )
       .setChatTheme(const ToggChatbotTheme())
-      .setAuthUrl('https://chatbotosb-demo8.serdoo.com/api/auth')
+      .setAuthUrl('https://chatbotbo-test.togg.com.tr/')
       .build();
 
   @override

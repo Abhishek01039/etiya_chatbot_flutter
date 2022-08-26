@@ -1,7 +1,7 @@
 import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
 import 'package:etiya_chatbot_flutter/etiya_chatbot_flutter.dart';
 import 'package:etiya_chatbot_flutter/src/cubit/chatbot_cubit.dart';
-import 'package:etiya_chatbot_flutter/src/presentation/widgets/conversation_feedback.dart';
+import 'package:etiya_chatbot_flutter/src/presentation/screen/conversation_feedback_screen.dart';
 import 'package:etiya_chatbot_flutter/src/ui/etiya_message_input.dart';
 import 'package:etiya_chatbot_flutter/src/ui/image_viewer.dart';
 import 'package:etiya_chatbot_flutter/src/ui/login_sheet.dart';
@@ -27,17 +27,16 @@ class _EtiyaChatWidgetState extends State<EtiyaChatWidget> {
         if (state is ChatbotMessages) {
           _chatView.scrollToBottom();
         } else if (state is ChatbotSessionEnded) {
-          showDialog(
-            context: context,
-            builder: (ctx) {
-              return BlocProvider.value(
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => BlocProvider.value(
                 value: context.read<ChatbotCubit>(),
-                child: ConversationFeedback(
-                  state.message,
+                child: ConversationRatingScreen(
+                  message: state.message,
                   theme: context.read<ChatTheme>(),
                 ),
-              );
-            },
+              ),
+            ),
           );
         }
       },
@@ -86,9 +85,11 @@ extension ChatInteractions on _EtiyaChatWidgetState {
   Future<void> _carouselPressedAction(CarouselButtonItem item) async {
     Log.info(item.toString());
     if (item.url != null) {
+      // ignore: deprecated_member_use
       if (await canLaunch(item.url!)) {
         // TODO: Check if this works for VPN things
         // You may need to make sure device's browser is opened.
+        // ignore: deprecated_member_use
         await launch(item.url!);
       }
     } else if (item.payload != null) {

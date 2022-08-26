@@ -1,6 +1,3 @@
-
-
-
 import 'app_localizations.dart';
 
 /// The translations for Turkish (`tr`).
@@ -17,7 +14,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get email_address => 'Email Adresi';
 
   @override
-  String get enter_non_empty_password => 'Lütfen şifre alanını boş bırakmayınız';
+  String get enter_non_empty_password =>
+      'Lütfen şifre alanını boş bırakmayınız';
 
   @override
   String get password => 'Şifre';

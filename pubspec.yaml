@@ -2,7 +2,7 @@ name: etiya_chatbot_flutter
 description: A new Flutter project.
 version: 0.1.0
 repository: https://github.com/Etiya/etiya_chatbot_flutter.git
-
+publish_to: none
 environment:
   sdk: ">=2.16.2 <3.0.0"
   flutter: ">=1.17.0"
@@ -35,6 +35,8 @@ dependencies:
 
   flutter:
     sdk: flutter
+    
+  auto_size_text: ^3.0.0
 
   flutter_bloc: ^8.0.1
 
@@ -59,8 +61,12 @@ dependencies:
   # https://pub.dev/packages/uuid
   uuid: ^3.0.6
 
+  flutter_hooks: ^0.18.3
   flutter_localizations:
     sdk: flutter
+  flutter_screenutil: ^5.5.3+2
+  show_up_animation: ^2.0.0
+  flutter_html: ^2.2.1
 
 dev_dependencies:
   bloc_test: ^9.0.3
@@ -74,7 +80,12 @@ dev_dependencies:
 
   styled_widget: ^0.4.0+3
 
+
 # The following section is specific to Flutter.
-flutter:
+flutter:  
   uses-material-design: true
+  assets:
+    - assets/images/
   generate: true
+
+

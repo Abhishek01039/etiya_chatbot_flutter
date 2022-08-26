@@ -26,8 +26,8 @@ void main() {
 
     setUp(() {
       _etiyaChatbotBuilder = EtiyaChatbotBuilder(
-        serviceUrl: 'https://chatbotbo-demo8.serdoo.com/api/chat',
-        socketUrl: 'https://chatbotbo-demo8.serdoo.com/nlp',
+        serviceUrl: 'https://chatbotbo-test.togg.com.tr/api/chat',
+        socketUrl: 'https://chatbotbo-test.togg.com.tr/nlp',
         userName: 'enesKaraosman',
       );
 
@@ -42,7 +42,6 @@ void main() {
     });
 
     tearDown(() {
-      chatbotCubit.dispose();
       chatbotCubit.close();
     });
 
@@ -64,8 +63,6 @@ void main() {
             () => _mockHttpClientRepository.sendMessage(
               text: any(named: 'text'),
               senderId: any(named: 'senderId'),
-              quickReplyTitle: any(named: 'quickReplyTitle'),
-              quickReplyPayload: any(named: 'quickReplyPayload'),
               type: any(named: 'type'),
             ),
           ).thenAnswer((_) async {});
@@ -88,8 +85,6 @@ void main() {
             () => _mockHttpClientRepository.sendMessage(
               text: any(named: 'text'),
               senderId: any(named: 'senderId'),
-              quickReplyTitle: any(named: 'quickReplyTitle'),
-              quickReplyPayload: any(named: 'quickReplyPayload'),
               type: any(named: 'type'),
             ),
           ).thenAnswer((_) async {});
@@ -117,8 +112,6 @@ void main() {
             () => _mockHttpClientRepository.sendMessage(
               text: any(named: 'text'),
               senderId: any(named: 'senderId'),
-              quickReplyTitle: any(named: 'quickReplyTitle'),
-              quickReplyPayload: any(named: 'quickReplyPayload'),
               type: any(named: 'type'),
             ),
           ).thenAnswer((_) async {});

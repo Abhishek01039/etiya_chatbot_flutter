@@ -25,7 +25,7 @@ class FakeSocketClientRepository extends SocketClientRepository {
   }
 
   @override
-  void connect() => print('Fake Socket Connected');
+  void connect() {}
 
   @override
   void emit(String event, [dynamic data]) {}

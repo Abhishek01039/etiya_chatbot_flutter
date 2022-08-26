@@ -1,4 +1,3 @@
-import 'package:etiya_chatbot_data/src/models/models.dart';
 import 'package:etiya_chatbot_domain/etiya_chatbot_domain.dart';
 
 class MessageUser {

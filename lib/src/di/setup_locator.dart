@@ -10,7 +10,6 @@ class DependencyInjection {
   static List<RepositoryProvider> build(
     EtiyaChatbotBuilder builder,
   ) {
-
     builder.visitorId = TOGGMobileSdk().getTOGGUser().userId;
 
     final socketClientRepository = SocketClientRepositoryImpl(

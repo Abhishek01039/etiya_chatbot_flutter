@@ -204,6 +204,25 @@ class Element {
   toString() => toJson().toString();
 }
 
+class Emojis {
+  String? title;
+  String? value;
+  Emojis({
+    this.title,
+    this.value,
+  });
+
+  factory Emojis.fromJson(Map<String, dynamic> json) => Emojis(
+        title: json["title"] as String?,
+        value: json["value"] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "value": value,
+      };
+}
+
 // MARK: - CarouselButton 👍🏻
 class CarouselButton {
   CarouselButton({
@@ -255,6 +274,7 @@ class Payload {
     this.conversationId,
     this.quickReplies,
     this.elements,
+    this.emojiText,
     this.mime,
     this.url,
     this.text,
@@ -267,6 +287,7 @@ class Payload {
   String? conversationId;
   List<QuickReply>? quickReplies;
   List<Element>? elements;
+  List<Emojis>? emojiText;
   String? mime;
   String? url;
   String? text;
@@ -291,6 +312,13 @@ class Payload {
                   (x) => Element.fromJson(x as Map<String, dynamic>),
                 ) as Iterable,
               ),
+        emojiText: json["emojiText"] == null
+            ? null
+            : List<Emojis>.from(
+                json["emojiText"].map(
+                  (x) => Emojis.fromJson(x as Map<String, dynamic>),
+                ) as Iterable,
+              ),
         mime: json["mime"] as String?,
         url: json["url"] as String?,
         text: json["text"] as String?,
@@ -304,6 +332,7 @@ class Payload {
         "conversationId": conversationId,
         "quick_replies": quickReplies,
         "elements": elements,
+        "emojiText": emojiText,
         "mime": mime,
         "url": url,
         "text": text,

@@ -3,6 +3,7 @@ import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
 import 'package:etiya_chatbot_flutter/etiya_chatbot_flutter.dart';
 import 'package:etiya_chatbot_flutter/src/cubit/chatbot_cubit.dart';
 import 'package:etiya_chatbot_flutter/src/localization/localization.dart';
+import 'package:etiya_chatbot_flutter/src/presentation/screen/conversation_rating_feedback_screen.dart';
 import 'package:etiya_chatbot_flutter/src/presentation/widgets/background_gradient.dart';
 import 'package:etiya_chatbot_flutter/src/presentation/widgets/button_rounded.dart';
 import 'package:etiya_chatbot_flutter/src/presentation/widgets/custom_slider.dart';
@@ -21,71 +22,92 @@ class ConversationRatingScreen extends HookWidget {
   final ChatTheme theme;
   double progress = 0;
   TextEditingController feedbackTextController = TextEditingController();
+  final controller = ScrollController();
+  late double kPadding;
 
   @override
   Widget build(BuildContext context) {
     final ratingScore = useState<double>(0);
     final ratingProgress = useState<double>(0.17);
     final textIndex = useState<double>(0);
+    final size = MediaQuery.of(context).size;
+
     // final animationControl = ();
 
-    return Scaffold(
       extendBody: true,
+      resizeToAvoidBottomInset: true,
       body: _conversationRatingScreen(
         ratingScore,
         ratingProgress,
         textIndex,
         message,
         context,
+        size,
       ),
     );
   }
 
   Widget _conversationRatingScreen(
-    ValueNotifier<double> ratingScore,
-    ValueNotifier<double> ratingProgress,
-    ValueNotifier<double> textIndex,
-    MessageResponse chatbotMessage,
-    BuildContext context,
-  ) {
-    return _conversationFeedbackBody(context, [
-      const SizedBox(
-        height: 50.0,
-      ),
-      _backButton(context),
-      _toggLogo(),
-      const SizedBox(height: 24),
-      _toggTitle(chatbotMessage),
-      _animatedCar(
-        ratingProgress: ratingProgress,
-      ),
-      _carSlider(ratingScore, ratingProgress),
-      _ratingWidget(ratingScore, ratingProgress, textIndex, chatbotMessage),
-      _feedbackWidget(
-        ratingScore,
-        ratingProgress,
-        chatbotMessage,
-        context,
-      ),
-      _submitButton(ratingScore, ratingProgress, context),
-    ]);
+      ValueNotifier<double> ratingScore,
+      ValueNotifier<double> ratingProgress,
+      ValueNotifier<double> textIndex,
+      MessageResponse chatbotMessage,
+      BuildContext context,
+      Size size) {
+    return _conversationFeedbackBody(
+      context,
+      [
+        SizedBox(
+          height: size.height / 25,
+        ),
+        _backButton(context, size),
+        _toggLogo(size),
+        SizedBox(height: size.height / 70),
+        _toggTitle(chatbotMessage, size),
+        _AnimatedCar(
+          ratingProgress: ratingProgress,
+          size: size,
+        ),
+        _carSlider(ratingScore, ratingProgress, size),
+        _ratingWidget(
+          ratingScore,
+          ratingProgress,
+          textIndex,
+          chatbotMessage,
+          size,
+        ),
+        _feedbackWidget(
+          ratingScore,
+          ratingProgress,
+          chatbotMessage,
+          context,
+          size,
+        ),
+        _submitButton(ratingScore, ratingProgress, context, size),
+      ],
+      size,
+    );
   }
 
-  Widget _conversationFeedbackBody(BuildContext context, List<Widget> widgets) {
+  Widget _conversationFeedbackBody(
+      BuildContext context, List<Widget> widgets, Size size) {
     return Stack(
       children: [
         ...screenGradientElements,
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
-          child: Column(
-            children: widgets,
+        SingleChildScrollView(
+          controller: controller,
+          child: Padding(
+            padding: EdgeInsets.all(kPadding),
+            child: Column(
+              children: widgets,
+            ),
           ),
         ),
       ],
     );
   }
 
-  Align _backButton(BuildContext context) {
+  Align _backButton(BuildContext context, Size size) {
     debugPrint("conv backButton");
     return Align(
       alignment: Alignment.centerLeft,
@@ -104,10 +126,9 @@ class ConversationRatingScreen extends HookWidget {
     );
   }
 
-  SizedBox _toggLogo() {
+  SizedBox _toggLogo(Size size) {
     return SizedBox(
-      height: 44,
-      width: 169,
+      width: size.width / 2.5,
       child: Image.asset(
         'assets/images/logo.png',
         package: 'etiya_chatbot_flutter',
@@ -115,7 +136,7 @@ class ConversationRatingScreen extends HookWidget {
     );
   }
 
-  Padding _toggTitle(MessageResponse chatbotMessage) {
+  Padding _toggTitle(MessageResponse chatbotMessage, Size size) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: ShowUpAnimation(
@@ -128,12 +149,11 @@ class ConversationRatingScreen extends HookWidget {
     );
   }
 
-  SizedBox _carSlider(
-    ValueNotifier<double> ratingScore,
-    ValueNotifier<double> ratingProgress,
-  ) {
+  SizedBox _carSlider(ValueNotifier<double> ratingScore,
+      ValueNotifier<double> ratingProgress, Size size) {
     return SizedBox(
-      height: 80,
+      height: size.height / 11,
+      width: size.width * 0.9,
       child: CustomSlider(
         gradient: const LinearGradient(
           colors: [
@@ -167,11 +187,8 @@ class ConversationRatingScreen extends HookWidget {
     );
   }
 
-  ButtonRounded _submitButton(
-    ValueNotifier<double> ratingScore,
-    ValueNotifier<double> ratingProgress,
-    BuildContext context,
-  ) {
+  ButtonRounded _submitButton(ValueNotifier<double> ratingScore,
+      ValueNotifier<double> ratingProgress, BuildContext context, Size size) {
     return ratingProgress.value != 0.17
         ? ButtonRounded(
             margin: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -191,15 +208,15 @@ class ConversationRatingScreen extends HookWidget {
   }
 
   Column _feedbackWidget(
-    ValueNotifier<double> ratingScore,
-    ValueNotifier<double> ratingProgress,
-    MessageResponse chatbotMessage,
-    BuildContext context,
-  ) {
+      ValueNotifier<double> ratingScore,
+      ValueNotifier<double> ratingProgress,
+      MessageResponse chatbotMessage,
+      BuildContext context,
+      Size size) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(14),
+          padding: const EdgeInsets.all(20),
           child: DecoratedBox(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -213,8 +230,15 @@ class ConversationRatingScreen extends HookWidget {
               ],
             ),
             child: SizedBox(
-              height: 130,
+              height: size.height / 8,
               child: TextField(
+                onTap: () {
+                  controller.animateTo(
+                    MediaQuery.of(context).size.height * 0.31,
+                    curve: Curves.easeOut,
+                    duration: const Duration(milliseconds: 600),
+                  );
+                },
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.all(24),
@@ -236,17 +260,16 @@ class ConversationRatingScreen extends HookWidget {
   }
 
   Widget _ratingWidget(
-    ValueNotifier<double> ratingScore,
-    ValueNotifier<double> ratingProgress,
-    ValueNotifier<double> textIndex,
-    MessageResponse chatbotMessage,
-  ) {
+      ValueNotifier<double> ratingScore,
+      ValueNotifier<double> ratingProgress,
+      ValueNotifier<double> textIndex,
+      MessageResponse chatbotMessage,
+      Size size) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 22.0),
+      padding: EdgeInsets.symmetric(horizontal: size.width / 40),
       child: Column(
         children: [
           SizedBox(
-            height: 120,
             child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
@@ -261,9 +284,10 @@ class ConversationRatingScreen extends HookWidget {
               ),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ratingElement(
                       text: message
@@ -271,8 +295,8 @@ class ConversationRatingScreen extends HookWidget {
                           '',
                       activeColor: const Color(0xFFE12125),
                       icon: FontAwesomeIcons.faceFrownOpen,
-                      isActive:
-                          ratingScore.value <= 1 && ratingScore.value != 0.17,
+                      isActive: ratingScore.value <= 1 &&
+                          ratingProgress.value != 0.17,
                       ontap: () {
                         ratingScore.value = 1;
                         ratingProgress.value = 0.40;
@@ -341,33 +365,56 @@ class ConversationRatingScreen extends HookWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ratingProgress.value != 0.17
-                ? ShowUpAnimation(
-                    offset: 1,
-                    delayStart: const Duration(milliseconds: 400),
-                    animationDuration: const Duration(milliseconds: 400),
-                    curve: Curves.easeInOutExpo,
-                    child: SizedBox(
-                      height: 100,
-                      child: AutoSizeText(
-                        chatbotMessage
-                                .rawMessage
-                                ?.data
-                                ?.payload
-                                ?.emojiText?[ratingProgress.value.toInt()]
-                                .value ??
-                            '',
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
+            child: Builder(
+              builder: (context) {
+                return Column(
+                  children: [
+                    if (ratingProgress.value >= 0.18 &&
+                        ratingProgress.value < 1.0)
+                      _animateTexts(size, chatbotMessage, ratingProgress)
+                    else if (ratingProgress.value >= 1.01 &&
+                        ratingProgress.value < 1.99)
+                      _animateTexts(size, chatbotMessage, ratingProgress)
+                    else if (ratingProgress.value >= 2.01 &&
+                        ratingProgress.value < 2.99)
+                      _animateTexts(size, chatbotMessage, ratingProgress)
+                    else if (ratingProgress.value >= 3.10 &&
+                        ratingProgress.value < 4)
+                      _animateTexts(size, chatbotMessage, ratingProgress)
+                    else if (ratingProgress.value >= 4.10 &&
+                        ratingProgress.value < 5)
+                      _animateTexts(size, chatbotMessage, ratingProgress)
+                    else
+                      SizedBox(
+                        height: size.height / 11,
                       ),
-                    ),
-                  )
-                : const SizedBox(
-                    height: 100,
-                  ),
+                  ],
+                );
+              },
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  ShowUpAnimation _animateTexts(Size size, MessageResponse chatbotMessage,
+      ValueNotifier<double> ratingProgress) {
+    return ShowUpAnimation(
+      offset: 2,
+      delayStart: const Duration(milliseconds: 200),
+      animationDuration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOutExpo,
+      child: SizedBox(
+        height: size.height / 11,
+        child: AutoSizeText(
+          chatbotMessage.rawMessage?.data?.payload
+                  ?.emojiText?[ratingProgress.value.toInt()].value ??
+              '',
+          style: const TextStyle(
+            fontSize: 16,
+          ),
+        ),
       ),
     );
   }
@@ -424,31 +471,50 @@ class ConversationRatingScreen extends HookWidget {
           feedback: feedbackTextController.text,
           sessionId: int.tryParse(message.sessionId ?? '') ?? 0,
         );
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ConversationRatingFeedbackScreen(
+          endText: message.thank ??
+              'Değerli görüşleriniz için teşekkür eder, sağlıklı ve mutlu günler dileriz.',
+        ),
+      ),
+    );
     Navigator.of(context).pop();
   }
 }
 
-class _animatedCar extends StatelessWidget {
-  _animatedCar({Key? key, required this.ratingProgress}) : super(key: key);
+// ignore: must_be_immutable
+class _AnimatedCar extends StatelessWidget {
+  _AnimatedCar({
+    Key? key,
+    required this.ratingProgress,
+    required this.size,
+  }) : super(key: key);
   ValueNotifier<double> ratingProgress;
-
+  Size size;
   @override
   Widget build(BuildContext context) {
+    final carRoad = ratingProgress.value.clamp(0, 1);
+    final ratingProgressPercentage = ratingProgress.value / 5;
+    final carWidth = size.width / 10;
+    final carPositionX =
+        (ratingProgressPercentage * size.width) - size.width * 0.1;
     return SizedBox(
-      height: 100,
-      width: 485,
+      height: size.height / 12,
+      width: size.width * 0.7,
       child: Stack(
         children: [
           AnimatedPositioned(
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeOut,
-            top: 20,
-            height: 140,
-            width: 120,
-            left: -30 + (ratingProgress.value * 70),
+            height: size.height / 9,
+            width: size.width / 4,
+            left: carPositionX,
             child: Image.asset(
               "assets/images/car.png",
               package: 'etiya_chatbot_flutter',
+              width: carWidth,
             ),
           ),
         ],

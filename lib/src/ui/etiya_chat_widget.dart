@@ -7,6 +7,7 @@ import 'package:etiya_chatbot_flutter/src/ui/image_viewer.dart';
 import 'package:etiya_chatbot_flutter/src/ui/login_sheet.dart';
 import 'package:etiya_chatbot_flutter/src/util/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,12 +22,19 @@ class _EtiyaChatWidgetState extends State<EtiyaChatWidget> {
   late Chat _chatView;
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChatbotCubit, ChatbotState>(
       listener: (context, state) {
         if (state is ChatbotMessages) {
           _chatView.scrollToBottom();
         } else if (state is ChatbotSessionEnded) {
+          SystemChannels.textInput.invokeMethod('TextInput.hide');
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => BlocProvider.value(

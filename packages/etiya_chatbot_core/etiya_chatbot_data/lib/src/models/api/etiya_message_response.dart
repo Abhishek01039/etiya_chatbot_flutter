@@ -1,23 +1,24 @@
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 class MessageResponse {
-  MessageResponse({
-    this.id,
-    this.sessionId,
-    this.type,
-    this.text,
-    this.rawMessage,
-    this.direction,
-    // this.session,
-    this.ts,
-    this.userId,
-    this.user,
-  });
+  MessageResponse(
+      {this.id,
+      this.sessionId,
+      this.type,
+      this.text,
+      this.rawMessage,
+      this.direction,
+      // this.session,
+      this.ts,
+      this.userId,
+      this.user,
+      this.thank});
 
   String? id;
   String? sessionId;
   String? type;
   String? text;
+  String? thank;
   RawMessage? rawMessage;
 
   // Session? session;
@@ -33,6 +34,7 @@ class MessageResponse {
         // session: json["session"] == null ? null : Session.fromJson(json["session"]),
         type: json["type"] as String?,
         text: json["text"] as String?,
+        thank: json["thank"] as String?,
         rawMessage: json["rawMessage"] == null
             ? null
             : RawMessage.fromJson(

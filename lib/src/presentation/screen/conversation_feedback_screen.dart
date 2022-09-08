@@ -189,19 +189,23 @@ class ConversationRatingScreen extends HookWidget {
       ValueNotifier<double> ratingProgress, BuildContext context, Size size) {
     return ratingProgress.value != 0.17
         ? ButtonRounded(
+            text: message.elements?.title ?? context.localization.submit,
             margin: const EdgeInsets.symmetric(horizontal: 24.0),
-            text: context.localization.submit,
             onPressed: () => ratingProgress.value != 0.17
                 ? sendFeedback(ratingScore, context)
                 : null,
-            child: Text(context.localization.submit),
+            child: Text(
+              message.elements?.title ?? context.localization.submit,
+            ),
           )
         : ButtonRounded(
             color: Colors.grey.shade400,
             margin: const EdgeInsets.symmetric(horizontal: 24.0),
             text: context.localization.submit,
             onPressed: () {},
-            child: Text(context.localization.submit),
+            child: Text(
+              message.elements?.title ?? context.localization.submit,
+            ),
           );
   }
 
@@ -490,12 +494,14 @@ class _AnimatedCar extends StatelessWidget {
   }) : super(key: key);
   ValueNotifier<double> ratingProgress;
   Size size;
+
   @override
   Widget build(BuildContext context) {
     final carRoad = ratingProgress.value.clamp(0, 1);
     final ratingProgressPercentage = ratingProgress.value / 5;
-    final carWidth = size.width / 10;
-    final carPositionX = ((size.width - 60) * ratingProgressPercentage) - 30;
+    final carWidth = size.width / 14;
+    final carPositionX =
+        ((size.width - 50) * ratingProgressPercentage) - carWidth;
     debugPrint(
       "car postion:$ratingProgressPercentage Car positionX:$carPositionX ",
     );

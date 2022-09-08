@@ -10,6 +10,7 @@ class MessageResponse {
       this.direction,
       // this.session,
       this.ts,
+      this.elements,
       this.userId,
       this.user,
       this.thank});
@@ -19,6 +20,7 @@ class MessageResponse {
   String? type;
   String? text;
   String? thank;
+  Elements? elements;
   RawMessage? rawMessage;
 
   // Session? session;
@@ -35,6 +37,9 @@ class MessageResponse {
         type: json["type"] as String?,
         text: json["text"] as String?,
         thank: json["thank"] as String?,
+        elements: json['elements'] == null
+            ? null
+            : Elements.fromJson(json['elements'] as Map<String, dynamic>),
         rawMessage: json["rawMessage"] == null
             ? null
             : RawMessage.fromJson(
@@ -102,6 +107,22 @@ class RawMessage {
         "type": type,
         "channel": channel,
         "__carrier": carrier,
+      };
+}
+
+class Elements {
+  String? title;
+  String? value;
+  Elements({
+    this.title,
+    this.value,
+  });
+  factory Elements.fromJson(Map<String, dynamic> json) => Elements(
+      title: json["title"] as String?, value: json["value"] as String?);
+
+  Map<String, dynamic> toJson() => {
+        "text": title,
+        "extras": value,
       };
 }
 

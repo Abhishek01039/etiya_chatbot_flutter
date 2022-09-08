@@ -27,7 +27,7 @@ class ConversationRatingScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final ratingScore = useState<double>(0);
-    final ratingProgress = useState<double>(0.17);
+    final ratingProgress = useState<double>(0.30);
     final textIndex = useState<double>(0);
     final size = MediaQuery.of(context).size;
 
@@ -171,7 +171,7 @@ class ConversationRatingScreen extends HookWidget {
           value: ratingProgress.value,
           onChanged: (value) {
             var tempvalue = value;
-            tempvalue = tempvalue.clamp(0.17, 4.85);
+            tempvalue = tempvalue.clamp(0.30, 4.55);
             ratingProgress.value = tempvalue;
             value = value.ceilToDouble();
             Log.info('onRatingUpdate = ');
@@ -187,11 +187,11 @@ class ConversationRatingScreen extends HookWidget {
 
   ButtonRounded _submitButton(ValueNotifier<double> ratingScore,
       ValueNotifier<double> ratingProgress, BuildContext context, Size size) {
-    return ratingProgress.value != 0.17
+    return ratingProgress.value != 0.30
         ? ButtonRounded(
             text: message.elements?.title ?? context.localization.submit,
             margin: const EdgeInsets.symmetric(horizontal: 24.0),
-            onPressed: () => ratingProgress.value != 0.17
+            onPressed: () => ratingProgress.value != 0.30
                 ? sendFeedback(ratingScore, context)
                 : null,
             child: Text(
@@ -298,7 +298,7 @@ class ConversationRatingScreen extends HookWidget {
                       activeColor: const Color(0xFFE12125),
                       icon: FontAwesomeIcons.faceFrownOpen,
                       isActive: ratingScore.value <= 1 &&
-                          ratingProgress.value != 0.17,
+                          ratingProgress.value != 0.30,
                       ontap: () {
                         ratingScore.value = 1;
                         ratingProgress.value = 0.40;
@@ -371,7 +371,7 @@ class ConversationRatingScreen extends HookWidget {
               builder: (context) {
                 return Column(
                   children: [
-                    if (ratingProgress.value >= 0.18 &&
+                    if (ratingProgress.value >= 0.31 &&
                         ratingProgress.value < 1.0)
                       _animateTexts(size, chatbotMessage, ratingProgress)
                     else if (ratingProgress.value >= 1.01 &&

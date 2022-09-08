@@ -46,7 +46,7 @@ class ConversationRatingFeedbackScreen extends StatelessWidget {
       context,
       [
         SizedBox(
-          height: size.height / 25,
+          height: size.height / 15,
         ),
         _backButton(context, size),
         _toggLogo(size),
@@ -65,9 +65,7 @@ class ConversationRatingFeedbackScreen extends StatelessWidget {
         padding: const EdgeInsets.only(left: 35),
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).pop;
-            Navigator.of(context).pop;
-            Navigator.of(context).pop;
+            Navigator.of(context).pop();
           },
           child: const Icon(
             Icons.arrow_back_ios_new,

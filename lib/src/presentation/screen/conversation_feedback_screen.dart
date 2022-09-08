@@ -473,7 +473,7 @@ class ConversationRatingScreen extends HookWidget {
           feedback: feedbackTextController.text,
           sessionId: int.tryParse(message.sessionId ?? '') ?? 0,
         );
-
+    Navigator.of(context).pop();
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => ConversationRatingFeedbackScreen(

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:etiya_chatbot_flutter/src/presentation/widgets/background_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:show_up_animation/show_up_animation.dart';
@@ -31,6 +32,7 @@ class ConversationRatingFeedbackScreen extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(size.width / 60),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: widgets,
             ),
           ),
@@ -93,7 +95,12 @@ class ConversationRatingFeedbackScreen extends StatelessWidget {
         delayStart: const Duration(seconds: 1),
         animationDuration: const Duration(seconds: 1),
         curve: Curves.easeInOut,
-        child: Text(endText),
+        child: Center(
+          child: AutoSizeText(
+            endText,
+            style: const TextStyle(fontSize: 26),
+          ),
+        ),
       ),
     );
   }

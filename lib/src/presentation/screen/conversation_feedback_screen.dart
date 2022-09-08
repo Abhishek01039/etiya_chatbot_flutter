@@ -23,7 +23,6 @@ class ConversationRatingScreen extends HookWidget {
   double progress = 0;
   TextEditingController feedbackTextController = TextEditingController();
   final controller = ScrollController();
-  late double kPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class ConversationRatingScreen extends HookWidget {
     final size = MediaQuery.of(context).size;
 
     // final animationControl = ();
-
+    return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
       body: _conversationRatingScreen(
@@ -97,7 +96,7 @@ class ConversationRatingScreen extends HookWidget {
         SingleChildScrollView(
           controller: controller,
           child: Padding(
-            padding: EdgeInsets.all(kPadding),
+            padding: EdgeInsets.all(size.width / 60),
             child: Column(
               children: widgets,
             ),
@@ -153,7 +152,6 @@ class ConversationRatingScreen extends HookWidget {
       ValueNotifier<double> ratingProgress, Size size) {
     return SizedBox(
       height: size.height / 11,
-      width: size.width * 0.9,
       child: CustomSlider(
         gradient: const LinearGradient(
           colors: [
@@ -480,7 +478,6 @@ class ConversationRatingScreen extends HookWidget {
         ),
       ),
     );
-    Navigator.of(context).pop();
   }
 }
 
@@ -498,11 +495,12 @@ class _AnimatedCar extends StatelessWidget {
     final carRoad = ratingProgress.value.clamp(0, 1);
     final ratingProgressPercentage = ratingProgress.value / 5;
     final carWidth = size.width / 10;
-    final carPositionX =
-        (ratingProgressPercentage * size.width) - size.width * 0.1;
+    final carPositionX = ((size.width - 60) * ratingProgressPercentage) - 30;
+    debugPrint(
+      "car postion:$ratingProgressPercentage Car positionX:$carPositionX ",
+    );
     return SizedBox(
       height: size.height / 12,
-      width: size.width * 0.7,
       child: Stack(
         children: [
           AnimatedPositioned(

@@ -3,10 +3,10 @@ import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
 import 'package:etiya_chatbot_flutter/etiya_chatbot_flutter.dart';
 import 'package:etiya_chatbot_flutter/src/cubit/chatbot_cubit.dart';
 import 'package:etiya_chatbot_flutter/src/localization/localization.dart';
-import 'package:etiya_chatbot_flutter/src/presentation/screen/conversation_rating_feedback_screen.dart';
-import 'package:etiya_chatbot_flutter/src/presentation/widgets/background_gradient.dart';
-import 'package:etiya_chatbot_flutter/src/presentation/widgets/button_rounded.dart';
-import 'package:etiya_chatbot_flutter/src/presentation/widgets/custom_slider.dart';
+import 'package:etiya_chatbot_flutter/src/presentation/widgets/chatbot_popup.dart';
+import 'package:etiya_chatbot_flutter/src/presentation/widgets/conversation_feed_back/background_gradient.dart';
+import 'package:etiya_chatbot_flutter/src/presentation/widgets/conversation_feed_back/button_rounded.dart';
+import 'package:etiya_chatbot_flutter/src/presentation/widgets/conversation_feed_back/custom_slider.dart';
 import 'package:etiya_chatbot_flutter/src/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +30,17 @@ class ConversationRatingScreen extends HookWidget {
     final ratingProgress = useState<double>(0.30);
     final textIndex = useState<double>(0);
     final size = MediaQuery.of(context).size;
+    final opacityController = useState<double>(0);
 
+    useEffect(() {
+      if (ratingProgress.value != 1.0 ||
+          ratingProgress.value != 2.0 ||
+          ratingProgress.value != 3.0 ||
+          ratingProgress.value != 4.0) {
+        opacityController.value = 1.0;
+      }
+      return null;
+    });
     // final animationControl = ();
     return Scaffold(
       extendBody: true,
@@ -39,6 +49,7 @@ class ConversationRatingScreen extends HookWidget {
         ratingScore,
         ratingProgress,
         textIndex,
+        opacityController,
         message,
         context,
         size,
@@ -50,6 +61,7 @@ class ConversationRatingScreen extends HookWidget {
       ValueNotifier<double> ratingScore,
       ValueNotifier<double> ratingProgress,
       ValueNotifier<double> textIndex,
+      ValueNotifier<double> opacityController,
       MessageResponse chatbotMessage,
       BuildContext context,
       Size size) {
@@ -72,6 +84,7 @@ class ConversationRatingScreen extends HookWidget {
           ratingScore,
           ratingProgress,
           textIndex,
+          opacityController,
           chatbotMessage,
           size,
         ),
@@ -95,11 +108,8 @@ class ConversationRatingScreen extends HookWidget {
         ...screenGradientElements,
         SingleChildScrollView(
           controller: controller,
-          child: Padding(
-            padding: EdgeInsets.all(size.width / 60),
-            child: Column(
-              children: widgets,
-            ),
+          child: Column(
+            children: widgets,
           ),
         ),
       ],
@@ -142,8 +152,17 @@ class ConversationRatingScreen extends HookWidget {
         delayStart: const Duration(seconds: 1),
         animationDuration: const Duration(seconds: 1),
         curve: Curves.easeInOut,
-        child:
-            Html(data: chatbotMessage.rawMessage?.data?.payload?.title ?? ''),
+        child: Html(
+          data: chatbotMessage.rawMessage?.data?.payload?.title ?? '',
+          style: {
+            "p": Style(
+              padding: const EdgeInsets.all(8),
+              textAlign: TextAlign.center,
+              fontSize: const FontSize(21),
+              fontWeight: FontWeight.w400,
+            ),
+          },
+        ),
       ),
     );
   }
@@ -151,35 +170,38 @@ class ConversationRatingScreen extends HookWidget {
   SizedBox _carSlider(ValueNotifier<double> ratingScore,
       ValueNotifier<double> ratingProgress, Size size) {
     return SizedBox(
-      height: size.height / 11,
-      child: CustomSlider(
-        gradient: const LinearGradient(
-          colors: [
-            Color(0xFFFF001F),
-            Color(0xFFFF983C),
-            Color(0xFFFFD748),
-            Color(0xFF74DB34),
-            Color(0xFF00DF24),
-          ],
-        ),
-        trackHeight: 8,
-        assetImageHeight: 50,
-        assetImageWidth: 50,
-        inActiveTrackColor: const Color.fromRGBO(21, 12, 0, 0.05),
-        slider: Slider(
-          max: 5,
-          value: ratingProgress.value,
-          onChanged: (value) {
-            var tempvalue = value;
-            tempvalue = tempvalue.clamp(0.30, 4.55);
-            ratingProgress.value = tempvalue;
-            value = value.ceilToDouble();
-            Log.info('onRatingUpdate = ');
-            ratingScore.value = value;
-            debugPrint(
-              " our value = $value" + "\n our progressvalue= $tempvalue",
-            );
-          },
+      height: size.height / 16,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: size.width / 30),
+        child: CustomSlider(
+          gradient: const LinearGradient(
+            colors: [
+              Color(0xFFFF001F),
+              Color(0xFFFF983C),
+              Color(0xFFFFD748),
+              Color(0xFF74DB34),
+              Color(0xFF00DF24),
+            ],
+          ),
+          trackHeight: 8,
+          assetImageHeight: 40,
+          assetImageWidth: 40,
+          inActiveTrackColor: const Color.fromRGBO(21, 12, 0, 0.05),
+          slider: Slider(
+            max: 5,
+            value: ratingProgress.value,
+            onChanged: (value) {
+              var tempvalue = value;
+              tempvalue = tempvalue.clamp(0.30, 5);
+              ratingProgress.value = tempvalue;
+              value = value.ceilToDouble();
+              Log.info('onRatingUpdate = ');
+              ratingScore.value = value;
+              debugPrint(
+                " our value = $value" + "\n our progressvalue= $tempvalue",
+              );
+            },
+          ),
         ),
       ),
     );
@@ -265,10 +287,14 @@ class ConversationRatingScreen extends HookWidget {
       ValueNotifier<double> ratingScore,
       ValueNotifier<double> ratingProgress,
       ValueNotifier<double> textIndex,
+      ValueNotifier<double> opacityController,
       MessageResponse chatbotMessage,
       Size size) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width / 40),
+      padding: EdgeInsets.symmetric(
+        horizontal: size.width / 14,
+        vertical: size.height / 80,
+      ),
       child: Column(
         children: [
           SizedBox(
@@ -301,7 +327,7 @@ class ConversationRatingScreen extends HookWidget {
                           ratingProgress.value != 0.30,
                       ontap: () {
                         ratingScore.value = 1;
-                        ratingProgress.value = 0.40;
+                        ratingProgress.value = 0.55;
                         return null;
                       },
                     ),
@@ -314,7 +340,7 @@ class ConversationRatingScreen extends HookWidget {
                       isActive: ratingScore.value > 1 && ratingScore.value <= 2,
                       ontap: () {
                         ratingScore.value = 2;
-                        ratingProgress.value = 1.40;
+                        ratingProgress.value = 1.73;
                         return null;
                       },
                     ),
@@ -327,7 +353,7 @@ class ConversationRatingScreen extends HookWidget {
                       isActive: ratingScore.value > 2 && ratingScore.value <= 3,
                       ontap: () {
                         ratingScore.value = 3;
-                        ratingProgress.value = 2.50;
+                        ratingProgress.value = 2.75;
                         return null;
                       },
                     ),
@@ -340,7 +366,7 @@ class ConversationRatingScreen extends HookWidget {
                       isActive: ratingScore.value > 3 && ratingScore.value <= 4,
                       ontap: () {
                         ratingScore.value = 4;
-                        ratingProgress.value = 3.55;
+                        ratingProgress.value = 3.65;
                         return null;
                       },
                     ),
@@ -353,7 +379,7 @@ class ConversationRatingScreen extends HookWidget {
                       isActive: ratingScore.value > 4 && ratingScore.value <= 5,
                       ontap: () {
                         ratingScore.value = 5;
-                        ratingProgress.value = 4.60;
+                        ratingProgress.value = 4.65;
                         return null;
                       },
                     )
@@ -362,30 +388,52 @@ class ConversationRatingScreen extends HookWidget {
               ),
             ),
           ),
-          const SizedBox(
-            height: 40,
-          ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 20.0, left: 40, right: 40),
             child: Builder(
               builder: (context) {
                 return Column(
                   children: [
                     if (ratingProgress.value >= 0.31 &&
                         ratingProgress.value < 1.0)
-                      _animateTexts(size, chatbotMessage, ratingProgress)
+                      _animateTexts(
+                        size,
+                        chatbotMessage,
+                        ratingProgress,
+                        opacityController,
+                      )
                     else if (ratingProgress.value >= 1.01 &&
                         ratingProgress.value < 1.99)
-                      _animateTexts(size, chatbotMessage, ratingProgress)
+                      _animateTexts(
+                        size,
+                        chatbotMessage,
+                        ratingProgress,
+                        opacityController,
+                      )
                     else if (ratingProgress.value >= 2.01 &&
                         ratingProgress.value < 2.99)
-                      _animateTexts(size, chatbotMessage, ratingProgress)
+                      _animateTexts(
+                        size,
+                        chatbotMessage,
+                        ratingProgress,
+                        opacityController,
+                      )
                     else if (ratingProgress.value >= 3.10 &&
                         ratingProgress.value < 4)
-                      _animateTexts(size, chatbotMessage, ratingProgress)
+                      _animateTexts(
+                        size,
+                        chatbotMessage,
+                        ratingProgress,
+                        opacityController,
+                      )
                     else if (ratingProgress.value >= 4.10 &&
                         ratingProgress.value < 5)
-                      _animateTexts(size, chatbotMessage, ratingProgress)
+                      _animateTexts(
+                        size,
+                        chatbotMessage,
+                        ratingProgress,
+                        opacityController,
+                      )
                     else
                       SizedBox(
                         height: size.height / 11,
@@ -400,21 +448,25 @@ class ConversationRatingScreen extends HookWidget {
     );
   }
 
-  ShowUpAnimation _animateTexts(Size size, MessageResponse chatbotMessage,
-      ValueNotifier<double> ratingProgress) {
-    return ShowUpAnimation(
-      offset: 2,
-      delayStart: const Duration(milliseconds: 200),
-      animationDuration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOutExpo,
-      child: SizedBox(
-        height: size.height / 11,
-        child: AutoSizeText(
-          chatbotMessage.rawMessage?.data?.payload
-                  ?.emojiText?[ratingProgress.value.toInt()].value ??
-              '',
-          style: const TextStyle(
-            fontSize: 16,
+  Widget _animateTexts(Size size, MessageResponse chatbotMessage,
+      ValueNotifier<double> ratingProgress, ValueNotifier<double> opacity) {
+    return AnimatedOpacity(
+      duration: const Duration(seconds: 1),
+      opacity: opacity.value,
+      child: ShowUpAnimation(
+        offset: 2,
+        delayStart: const Duration(milliseconds: 200),
+        animationDuration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOutCubicEmphasized,
+        child: SizedBox(
+          height: size.height / 11,
+          child: AutoSizeText(
+            chatbotMessage.rawMessage?.data?.payload
+                    ?.emojiText?[ratingProgress.value.toInt()].value ??
+                '',
+            style: const TextStyle(
+              fontSize: 14,
+            ),
           ),
         ),
       ),
@@ -473,14 +525,11 @@ class ConversationRatingScreen extends HookWidget {
           feedback: feedbackTextController.text,
           sessionId: int.tryParse(message.sessionId ?? '') ?? 0,
         );
-    Navigator.of(context).pop();
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => ConversationRatingFeedbackScreen(
-          endText: message.thank ??
-              'Değerli görüşleriniz için teşekkür eder, sağlıklı ve mutlu günler dileriz.',
-        ),
-      ),
+    alertCustomMessage(
+      context,
+      'Togg Care',
+      message.thank ?? "Değerli görüşleriniz için teşekkür ederiz",
+      iconUrl: 'https://cdn.motor1.com/images/mgl/BXOZv4/s3/togg-logo.jpg',
     );
   }
 }
@@ -498,10 +547,11 @@ class _AnimatedCar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final carRoad = ratingProgress.value.clamp(0, 1);
+    const carWidth = 70.0;
     final ratingProgressPercentage = ratingProgress.value / 5;
-    final carWidth = size.width / 14;
-    final carPositionX =
-        ((size.width - 50) * ratingProgressPercentage) - carWidth;
+
+    final tempProg = size.width - size.width / 18 - carWidth;
+    final carPositionX = tempProg * ratingProgressPercentage;
     debugPrint(
       "car postion:$ratingProgressPercentage Car positionX:$carPositionX ",
     );
@@ -510,11 +560,12 @@ class _AnimatedCar extends StatelessWidget {
       child: Stack(
         children: [
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeOut,
-            height: size.height / 9,
+            duration: const Duration(milliseconds: 800),
+            curve: Curves.ease,
+            height: size.height / 8,
             width: size.width / 4,
-            left: carPositionX,
+            left: (ratingProgress.value < 1 ? -10 : 0) +
+                carPositionX.clamp(0, size.width * 0.78),
             child: Image.asset(
               "assets/images/car.png",
               package: 'etiya_chatbot_flutter',

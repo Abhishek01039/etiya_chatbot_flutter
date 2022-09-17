@@ -123,8 +123,8 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
 
   final EtiyaChatbot _etiyaChatbot = EtiyaChatbotBuilder(
-    serviceUrl: 'https://chatbotbo-test.togg.com.tr/api/chat',
-    socketUrl: 'https://chatbotbo-test.togg.com.tr/nlp',
+    serviceUrl: '',
+    socketUrl: '',
     userName: 'johnDoe',
   )
       .setAccessToken('Bearer *jwt*')
@@ -138,7 +138,7 @@ class MyHomePage extends StatefulWidget {
         ),
       )
       .setChatTheme(const ToggChatbotTheme())
-      .setAuthUrl('https://chatbotbo-test.togg.com.tr/')
+      .setAuthUrl('')
       .build();
 
   @override

@@ -35,7 +35,7 @@ class _EtiyaChatWidgetState extends State<EtiyaChatWidget> {
           _chatView.scrollToBottom();
         } else if (state is ChatbotSessionEnded) {
           SystemChannels.textInput.invokeMethod('TextInput.hide');
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => BlocProvider.value(

@@ -19,21 +19,11 @@ class EtiyaChatWidget extends StatefulWidget {
 
 class _EtiyaChatWidgetState extends State<EtiyaChatWidget> {
   late Chat _chatView;
-  late FocusNode focusNode;
+  final FocusNode focusNode = FocusNode();
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    focusNode = FocusNode();
-    super.initState();
-  }
-
-  Future<void> dismissKeyboard() async {
-    focusNode.unfocus();
   }
 
   @override
@@ -43,15 +33,14 @@ class _EtiyaChatWidgetState extends State<EtiyaChatWidget> {
         if (state is ChatbotMessages) {
           _chatView.scrollToBottom();
         } else if (state is ChatbotSessionEnded) {
-          dismissKeyboard().then(
-            (_) => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (_) => BlocProvider.value(
-                  value: context.read<ChatbotCubit>(),
-                  child: ConversationRatingScreen(
-                    message: state.message,
-                    theme: context.read<ChatTheme>(),
-                  ),
+          focusNode.unfocus();
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => BlocProvider.value(
+                value: context.read<ChatbotCubit>(),
+                child: ConversationRatingScreen(
+                  message: state.message,
+                  theme: context.read<ChatTheme>(),
                 ),
               ),
             ),
@@ -66,6 +55,7 @@ class _EtiyaChatWidgetState extends State<EtiyaChatWidget> {
           messageCellSizeConfigurator:
               MessageCellSizeConfigurator.defaultConfiguration,
           chatMessageInputField: EtiyaMessageInput(
+            focusNode: focusNode,
             sendButtonTapped: _sendButtonPressedAction,
             hintText: context.read<ChatbotCubit>().messageInputHintText,
           ),

@@ -23,7 +23,7 @@ class ConversationRatingScreen extends HookWidget {
   double progress = 0;
   TextEditingController feedbackTextController = TextEditingController();
   final controller = ScrollController();
-
+  late FocusNode focusNode;
   @override
   Widget build(BuildContext context) {
     final ratingScore = useState<double>(0);
@@ -32,6 +32,11 @@ class ConversationRatingScreen extends HookWidget {
     final size = MediaQuery.of(context).size;
     final opacityController = useState<double>(0);
     final changeFinished = useState<bool>(false);
+    useEffect(() {
+      focusNode = FocusNode();
+      focusNode.unfocus();
+      return null;
+    });
 
     // final animationControl = ();
     return Scaffold(
@@ -249,7 +254,7 @@ class ConversationRatingScreen extends HookWidget {
               child: TextField(
                 onTap: () {
                   controller.animateTo(
-                    MediaQuery.of(context).size.height * 0.31,
+                    size.height / (3),
                     curve: Curves.easeOut,
                     duration: const Duration(milliseconds: 600),
                   );

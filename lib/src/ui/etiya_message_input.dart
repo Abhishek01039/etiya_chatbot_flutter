@@ -5,12 +5,13 @@ import 'package:styled_widget/styled_widget.dart';
 class EtiyaMessageInput extends StatelessWidget {
   EtiyaMessageInput({
     Key? key,
+    this.focusNode,
     required this.sendButtonTapped,
     this.hintText = "Aa",
   }) : super(key: key);
 
   final textEditingController = TextEditingController();
-
+  final FocusNode ?focusNode;
   final Function(String) sendButtonTapped;
   final String hintText;
 
@@ -32,10 +33,11 @@ class EtiyaMessageInput extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
+
             child: TextField(
               key: ChatKeys.messageTextField.key,
               controller: textEditingController,
-              focusNode: FocusNode(),
+              focusNode: focusNode,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration.collapsed(
                 hintText: hintText,

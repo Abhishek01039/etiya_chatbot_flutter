@@ -7,7 +7,7 @@ class ChatbotPopup extends StatefulWidget {
     this.title,
     this.description,
     this.buttonText,
-    this.icon,
+    required this.icon,
     this.iconUrl,
     this.level = TopUpLevel.info,
     this.showMessageCancelButton = false,
@@ -19,7 +19,7 @@ class ChatbotPopup extends StatefulWidget {
     this.title,
     this.description,
     this.buttonText,
-    this.icon,
+    required this.icon,
     this.iconUrl,
     this.level = TopUpLevel.message,
     this.showMessageCancelButton = false,
@@ -31,7 +31,7 @@ class ChatbotPopup extends StatefulWidget {
   final String? description;
   final String? buttonText;
 
-  final dynamic icon;
+  final String icon;
   final String? iconUrl;
   final bool showMessageCancelButton;
 
@@ -82,44 +82,29 @@ class _ChatbotPopupState extends State<ChatbotPopup>
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (widget.iconUrl != null) ...[
-                      Image.network(
-                        widget.iconUrl!,
-                        height: 74,
-                        width: 100,
+                    Image.asset(
+                      widget.icon,
+                      package: 'etiya_chatbot_flutter',
+                      fit: BoxFit.fitHeight,
+                      height: 45,
+                    ),
+                    const SizedBox(height: 26.6),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 8,
                       ),
-                      const SizedBox(height: 26.6),
-                      if (widget.title != null)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 8,
-                          ),
-                          child: Text(
-                            widget.title ?? '',
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.headline2!.copyWith(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                        ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 8,
-                        ),
-                        child: Text(
-                          widget.description ?? '',
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.headline4!.copyWith(
-                            color: const Color(0xff575757),
-                            fontWeight: FontWeight.w400,
-                          ),
+                      child: Text(
+                        widget.description ?? '',
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.bodyLarge!.copyWith(
+                          color: const Color(0xff575757),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
                         ),
                       ),
-                      const SizedBox(height: 54),
-                    ],
+                    ),
+                    const SizedBox(height: 54),
                   ],
                 )
               ],
@@ -172,7 +157,7 @@ void alertCustomMessage(
         child: ChatbotPopup.message(
           title: title,
           description: description,
-          icon: icon,
+          icon: icon ?? 'assets/images/logo.png',
           iconUrl: iconUrl,
           action: action,
           buttonText: buttonText,

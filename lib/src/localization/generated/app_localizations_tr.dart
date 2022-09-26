@@ -14,6 +14,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get email_address => 'Email Adresi';
 
   @override
+  String get end_message =>
+      "Değerli görüşleriniz için teşekkür eder, sağlıklı ve mutlu günler dileriz.";
+
+  @override
   String get enter_non_empty_password =>
       'Lütfen şifre alanını boş bırakmayınız';
 

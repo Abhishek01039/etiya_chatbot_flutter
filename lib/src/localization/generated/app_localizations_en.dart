@@ -14,6 +14,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get email_address => 'Email Address';
 
   @override
+  String get end_message => 'Thank you for your valuable feedbacks, we wish you a healthy and pleasant day.';
+
+  @override
   String get enter_non_empty_password => 'Enter non-empty password';
 
   @override

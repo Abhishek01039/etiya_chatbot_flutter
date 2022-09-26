@@ -117,6 +117,10 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Email Address'**
+  ///
+
+  String get end_message;
+
   String get email_address;
 
   /// No description provided for @enter_non_empty_password.

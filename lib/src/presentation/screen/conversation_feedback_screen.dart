@@ -3,9 +3,9 @@ import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
 import 'package:etiya_chatbot_flutter/etiya_chatbot_flutter.dart';
 import 'package:etiya_chatbot_flutter/src/cubit/chatbot_cubit.dart';
 import 'package:etiya_chatbot_flutter/src/localization/localization.dart';
+import 'package:etiya_chatbot_flutter/src/presentation/widgets/async_button.dart';
 import 'package:etiya_chatbot_flutter/src/presentation/widgets/chatbot_popup.dart';
 import 'package:etiya_chatbot_flutter/src/presentation/widgets/conversation_feed_back/background_gradient.dart';
-import 'package:etiya_chatbot_flutter/src/presentation/widgets/conversation_feed_back/button_rounded.dart';
 import 'package:etiya_chatbot_flutter/src/presentation/widgets/conversation_feed_back/custom_slider.dart';
 import 'package:etiya_chatbot_flutter/src/util/logger.dart';
 import 'package:flutter/material.dart';
@@ -31,16 +31,8 @@ class ConversationRatingScreen extends HookWidget {
     final textIndex = useState<double>(0);
     final size = MediaQuery.of(context).size;
     final opacityController = useState<double>(0);
+    final changeFinished = useState<bool>(false);
 
-    useEffect(() {
-      if (ratingProgress.value != 1.0 ||
-          ratingProgress.value != 2.0 ||
-          ratingProgress.value != 3.0 ||
-          ratingProgress.value != 4.0) {
-        opacityController.value = 1.0;
-      }
-      return null;
-    });
     // final animationControl = ();
     return Scaffold(
       extendBody: true,
@@ -50,6 +42,7 @@ class ConversationRatingScreen extends HookWidget {
         ratingProgress,
         textIndex,
         opacityController,
+        changeFinished,
         message,
         context,
         size,
@@ -62,6 +55,7 @@ class ConversationRatingScreen extends HookWidget {
       ValueNotifier<double> ratingProgress,
       ValueNotifier<double> textIndex,
       ValueNotifier<double> opacityController,
+      ValueNotifier<bool> valueFinished,
       MessageResponse chatbotMessage,
       BuildContext context,
       Size size) {
@@ -69,7 +63,7 @@ class ConversationRatingScreen extends HookWidget {
       context,
       [
         SizedBox(
-          height: size.height / 25,
+          height: size.height / 17,
         ),
         _backButton(context, size),
         _toggLogo(size),
@@ -79,12 +73,13 @@ class ConversationRatingScreen extends HookWidget {
           ratingProgress: ratingProgress,
           size: size,
         ),
-        _carSlider(ratingScore, ratingProgress, size),
+        _carSlider(ratingScore, ratingProgress, valueFinished, size),
         _ratingWidget(
           ratingScore,
           ratingProgress,
           textIndex,
           opacityController,
+          valueFinished,
           chatbotMessage,
           size,
         ),
@@ -117,7 +112,6 @@ class ConversationRatingScreen extends HookWidget {
   }
 
   Align _backButton(BuildContext context, Size size) {
-    debugPrint("conv backButton");
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
@@ -167,8 +161,11 @@ class ConversationRatingScreen extends HookWidget {
     );
   }
 
-  SizedBox _carSlider(ValueNotifier<double> ratingScore,
-      ValueNotifier<double> ratingProgress, Size size) {
+  SizedBox _carSlider(
+      ValueNotifier<double> ratingScore,
+      ValueNotifier<double> ratingProgress,
+      ValueNotifier<bool> valueChange,
+      Size size) {
     return SizedBox(
       height: size.height / 16,
       child: Padding(
@@ -190,6 +187,10 @@ class ConversationRatingScreen extends HookWidget {
           slider: Slider(
             max: 5,
             value: ratingProgress.value,
+            onChangeEnd: (_) {
+              valueChange.value = false;
+            },
+            onChangeStart: (_) => valueChange.value = true,
             onChanged: (value) {
               var tempvalue = value;
               tempvalue = tempvalue.clamp(0.30, 5);
@@ -197,9 +198,6 @@ class ConversationRatingScreen extends HookWidget {
               value = value.ceilToDouble();
               Log.info('onRatingUpdate = ');
               ratingScore.value = value;
-              debugPrint(
-                " our value = $value" + "\n our progressvalue= $tempvalue",
-              );
             },
           ),
         ),
@@ -207,28 +205,21 @@ class ConversationRatingScreen extends HookWidget {
     );
   }
 
-  ButtonRounded _submitButton(ValueNotifier<double> ratingScore,
-      ValueNotifier<double> ratingProgress, BuildContext context, Size size) {
-    return ratingProgress.value != 0.30
-        ? ButtonRounded(
-            text: message.elements?.title ?? context.localization.submit,
-            margin: const EdgeInsets.symmetric(horizontal: 24.0),
-            onPressed: () => ratingProgress.value != 0.30
-                ? sendFeedback(ratingScore, context)
-                : null,
-            child: Text(
-              message.elements?.title ?? context.localization.submit,
-            ),
-          )
-        : ButtonRounded(
-            color: Colors.grey.shade400,
-            margin: const EdgeInsets.symmetric(horizontal: 24.0),
-            text: context.localization.submit,
-            onPressed: () {},
-            child: Text(
-              message.elements?.title ?? context.localization.submit,
-            ),
-          );
+  AsyncButton _submitButton(
+    ValueNotifier<double> ratingScore,
+    ValueNotifier<double> ratingProgress,
+    BuildContext context,
+    Size size,
+  ) {
+    return AsyncButton(
+      isEnabled: ratingProgress.value != 0.30,
+      text: message.elements?.title ?? context.localization.submit,
+      margin: const EdgeInsets.symmetric(horizontal: 24.0),
+      onPressed: () => sendFeedback(ratingScore, context),
+      child: Text(
+        message.elements?.title ?? context.localization.submit,
+      ),
+    );
   }
 
   Column _feedbackWidget(
@@ -274,7 +265,9 @@ class ConversationRatingScreen extends HookWidget {
                 maxLines: 4,
                 maxLength: 300,
                 textInputAction: TextInputAction.send,
-                onSubmitted: (_) => sendFeedback(ratingScore, context),
+                onSubmitted: (_) {
+                  sendFeedback(ratingScore, context);
+                },
               ),
             ),
           ),
@@ -288,6 +281,7 @@ class ConversationRatingScreen extends HookWidget {
       ValueNotifier<double> ratingProgress,
       ValueNotifier<double> textIndex,
       ValueNotifier<double> opacityController,
+      ValueNotifier<bool> changeFinished,
       MessageResponse chatbotMessage,
       Size size) {
     return Padding(
@@ -326,8 +320,17 @@ class ConversationRatingScreen extends HookWidget {
                       isActive: ratingScore.value <= 1 &&
                           ratingProgress.value != 0.30,
                       ontap: () {
+                        Future.delayed(
+                          const Duration(
+                            milliseconds: 500,
+                          ),
+                          () {
+                            changeFinished.value = true;
+                          },
+                        ).then((value) => changeFinished.value = false);
+
                         ratingScore.value = 1;
-                        ratingProgress.value = 0.55;
+                        ratingProgress.value = 0.35;
                         return null;
                       },
                     ),
@@ -339,8 +342,17 @@ class ConversationRatingScreen extends HookWidget {
                       activeColor: const Color(0xFFF25A29),
                       isActive: ratingScore.value > 1 && ratingScore.value <= 2,
                       ontap: () {
+                        Future.delayed(
+                          const Duration(
+                            milliseconds: 500,
+                          ),
+                          () {
+                            changeFinished.value = true;
+                          },
+                        ).then((value) => changeFinished.value = false);
+
                         ratingScore.value = 2;
-                        ratingProgress.value = 1.73;
+                        ratingProgress.value = 1.40;
                         return null;
                       },
                     ),
@@ -352,8 +364,17 @@ class ConversationRatingScreen extends HookWidget {
                       activeColor: const Color(0xFFFCB040),
                       isActive: ratingScore.value > 2 && ratingScore.value <= 3,
                       ontap: () {
+                        Future.delayed(
+                          const Duration(
+                            milliseconds: 500,
+                          ),
+                          () {
+                            changeFinished.value = true;
+                          },
+                        ).then((value) => changeFinished.value = false);
+
                         ratingScore.value = 3;
-                        ratingProgress.value = 2.75;
+                        ratingProgress.value = 2.50;
                         return null;
                       },
                     ),
@@ -365,8 +386,17 @@ class ConversationRatingScreen extends HookWidget {
                       activeColor: const Color(0xFF91CA61),
                       isActive: ratingScore.value > 3 && ratingScore.value <= 4,
                       ontap: () {
+                        Future.delayed(
+                          const Duration(
+                            milliseconds: 500,
+                          ),
+                          () {
+                            changeFinished.value = true;
+                          },
+                        ).then((value) => changeFinished.value = false);
+
                         ratingScore.value = 4;
-                        ratingProgress.value = 3.65;
+                        ratingProgress.value = 3.60;
                         return null;
                       },
                     ),
@@ -378,8 +408,17 @@ class ConversationRatingScreen extends HookWidget {
                       activeColor: const Color(0xFF3AB54B),
                       isActive: ratingScore.value > 4 && ratingScore.value <= 5,
                       ontap: () {
+                        Future.delayed(
+                          const Duration(
+                            milliseconds: 500,
+                          ),
+                          () {
+                            changeFinished.value = true;
+                          },
+                        ).then((value) => changeFinished.value = false);
+
                         ratingScore.value = 5;
-                        ratingProgress.value = 4.65;
+                        ratingProgress.value = 4.60;
                         return null;
                       },
                     )
@@ -390,58 +429,23 @@ class ConversationRatingScreen extends HookWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0, left: 40, right: 40),
-            child: Builder(
-              builder: (context) {
-                return Column(
-                  children: [
-                    if (ratingProgress.value >= 0.31 &&
-                        ratingProgress.value < 1.0)
-                      _animateTexts(
+            child: changeFinished.value
+                ? SizedBox(
+                    height: size.height / 11,
+                  )
+                : TweenAnimationBuilder(
+                    duration: const Duration(milliseconds: 500),
+                    tween: Tween<double>(begin: 0, end: 1),
+                    builder: (context, double value, child) => AnimatedOpacity(
+                      duration: const Duration(milliseconds: 500),
+                      opacity: value,
+                      child: _animateTexts(
                         size,
                         chatbotMessage,
-                        ratingProgress,
-                        opacityController,
-                      )
-                    else if (ratingProgress.value >= 1.01 &&
-                        ratingProgress.value < 1.99)
-                      _animateTexts(
-                        size,
-                        chatbotMessage,
-                        ratingProgress,
-                        opacityController,
-                      )
-                    else if (ratingProgress.value >= 2.01 &&
-                        ratingProgress.value < 2.99)
-                      _animateTexts(
-                        size,
-                        chatbotMessage,
-                        ratingProgress,
-                        opacityController,
-                      )
-                    else if (ratingProgress.value >= 3.10 &&
-                        ratingProgress.value < 4)
-                      _animateTexts(
-                        size,
-                        chatbotMessage,
-                        ratingProgress,
-                        opacityController,
-                      )
-                    else if (ratingProgress.value >= 4.10 &&
-                        ratingProgress.value < 5)
-                      _animateTexts(
-                        size,
-                        chatbotMessage,
-                        ratingProgress,
-                        opacityController,
-                      )
-                    else
-                      SizedBox(
-                        height: size.height / 11,
+                        ratingScore,
                       ),
-                  ],
-                );
-              },
-            ),
+                    ),
+                  ),
           ),
         ],
       ),
@@ -449,10 +453,10 @@ class ConversationRatingScreen extends HookWidget {
   }
 
   Widget _animateTexts(Size size, MessageResponse chatbotMessage,
-      ValueNotifier<double> ratingProgress, ValueNotifier<double> opacity) {
+      ValueNotifier<double> ratingScore) {
     return AnimatedOpacity(
       duration: const Duration(seconds: 1),
-      opacity: opacity.value,
+      opacity: 1,
       child: ShowUpAnimation(
         offset: 2,
         delayStart: const Duration(milliseconds: 200),
@@ -461,11 +465,15 @@ class ConversationRatingScreen extends HookWidget {
         child: SizedBox(
           height: size.height / 11,
           child: AutoSizeText(
-            chatbotMessage.rawMessage?.data?.payload
-                    ?.emojiText?[ratingProgress.value.toInt()].value ??
+            chatbotMessage
+                    .rawMessage
+                    ?.data
+                    ?.payload
+                    ?.emojiText?[ratingScore.value.clamp(0, 4.6).toInt()]
+                    .value ??
                 '',
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 16,
             ),
           ),
         ),
@@ -528,8 +536,8 @@ class ConversationRatingScreen extends HookWidget {
     alertCustomMessage(
       context,
       'Togg Care',
-      message.thank ?? "Değerli görüşleriniz için teşekkür ederiz",
-      iconUrl: 'https://cdn.motor1.com/images/mgl/BXOZv4/s3/togg-logo.jpg',
+      message.thank ?? context.localization.end_message,
+      icon: 'assets/images/logo.png',
     );
   }
 }
@@ -552,9 +560,7 @@ class _AnimatedCar extends StatelessWidget {
 
     final tempProg = size.width - size.width / 18 - carWidth;
     final carPositionX = tempProg * ratingProgressPercentage;
-    debugPrint(
-      "car postion:$ratingProgressPercentage Car positionX:$carPositionX ",
-    );
+
     return SizedBox(
       height: size.height / 12,
       child: Stack(

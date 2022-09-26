@@ -2,6 +2,7 @@
   "submit": "Gönder",
   "enter_valid_email": "Geçerli bir email giriniz",
   "email_address": "Email Adresi",
+  "end_message":"Değerli görüşleriniz için teşekkür eder, sağlıklı ve mutlu günler dileriz.",
   "enter_non_empty_password": "Lütfen şifre alanını boş bırakmayınız",
   "password": "Şifre",
   "login": "Giriş"

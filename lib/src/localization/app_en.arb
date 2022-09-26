@@ -2,7 +2,9 @@
   "submit": "Submit",
   "enter_valid_email": "Enter valid email",
   "email_address": "Email Address",
+  "end_message":"Thank you for your valuable feedbacks, we wish you a healthy and pleasant day.",
   "enter_non_empty_password": "Enter non-empty password",
   "password": "Password",
   "login": "Login"
+ 
 }

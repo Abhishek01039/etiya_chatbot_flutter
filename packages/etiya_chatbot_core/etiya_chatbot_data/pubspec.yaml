@@ -15,20 +15,21 @@ dependencies:
       url: https://github.com/Etiya/etiya_chatbot_flutter
       path: packages/etiya_chatbot_core/etiya_chatbot_domain
       ref: customer/togg-flutter-v2.10.5
-#    path: ../etiya_chatbot_domain
+  #    path: ../etiya_chatbot_domain
 
   http: ^0.13.4
   logger: ^1.1.0
   shared_preferences: ^2.0.15
   socket_io_client: ^2.0.0
-#  swifty_chat_data: ^0.1.0
+  #  swifty_chat_data: ^0.1.0
   # https://pub.dev/packages/swifty_chat
   swifty_chat: ^1.2.0
 
   togg_mobile_super_app_sdk:
     git:
       url: https://gitlab.togg.com.tr/digitalplatform/togg-mobile/mobile-super-app/togg_mobile_superapp_sdk
-      ref: feat/flutter-v2.10.5
+      #      ref: feat/flutter-v2.10.5
+      ref: 3289211473052279028776bea9190ab7fa1e2156
 
   uuid: ^3.0.6
 

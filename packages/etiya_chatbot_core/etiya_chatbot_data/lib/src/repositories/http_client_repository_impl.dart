@@ -18,7 +18,7 @@ class HttpClientRepositoryImpl extends HttpClientRepository {
           userId: userId,
           accessToken: accessToken,
         ) {
-    _httpClient = TOGGMobileSdk().getTOGGHttpClient(null, true);
+    _httpClient = TOGGMobileSdk.shared.getTOGGHttpClient(null, true);
   }
 
   late final ITOGGHttpClient _httpClient;
@@ -63,7 +63,7 @@ class HttpClientRepositoryImpl extends HttpClientRepository {
     MessageData? data,
   }) async {
     try {
-      final toggUser = TOGGMobileSdk().getTOGGUser();
+      final toggUser = TOGGMobileSdk.shared.getTOGGUser();
       var headers = <String, String>{'Content-Type': 'application/json'};
       if (accessToken != null) {
         headers.addAll({'Authorization': accessToken!});

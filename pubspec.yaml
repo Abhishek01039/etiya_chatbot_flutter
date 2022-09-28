@@ -11,31 +11,31 @@ dependencies:
   bloc: ^8.0.3
 
   equatable: ^2.0.3
- 
+
   etiya_chatbot_data:
     git:
       url: https://github.com/Etiya/etiya_chatbot_flutter
       path: packages/etiya_chatbot_core/etiya_chatbot_data
       ref: customer/togg-flutter-v2.10.5
-#    path: packages/etiya_chatbot_core/etiya_chatbot_data
+  #    path: packages/etiya_chatbot_core/etiya_chatbot_data
 
   etiya_chatbot_domain:
     git:
       url: https://github.com/Etiya/etiya_chatbot_flutter
       path: packages/etiya_chatbot_core/etiya_chatbot_domain
       ref: customer/togg-flutter-v2.10.5
-#    path: packages/etiya_chatbot_core/etiya_chatbot_domain
+  #    path: packages/etiya_chatbot_core/etiya_chatbot_domain
 
   etiya_chatbot_mocked_data:
     git:
       url: https://github.com/Etiya/etiya_chatbot_flutter
       path: packages/etiya_chatbot_core/etiya_chatbot_mocked_data
       ref: customer/togg-flutter-v2.10.5
-#    path: packages/etiya_chatbot_core/etiya_chatbot_mocked_data
+  #    path: packages/etiya_chatbot_core/etiya_chatbot_mocked_data
 
   flutter:
     sdk: flutter
-    
+
   auto_size_text: ^3.0.0
 
   flutter_bloc: ^8.0.1
@@ -81,7 +81,7 @@ dev_dependencies:
 
 
 # The following section is specific to Flutter.
-flutter:  
+flutter:
   uses-material-design: true
   assets:
     - assets/images/

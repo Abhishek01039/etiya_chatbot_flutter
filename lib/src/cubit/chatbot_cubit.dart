@@ -22,7 +22,7 @@ class ChatbotCubit extends Cubit<ChatbotState> {
   /// Customer User
   EtiyaChatUser get _customerUser {
     try {
-      final toggUser = TOGGMobileSdk().getTOGGUser();
+      final toggUser = TOGGMobileSdk.shared.getTOGGUser();
       final user = EtiyaChatUser(
         fullName: chatbotBuilder.userName,
         userId: toggUser.userId,

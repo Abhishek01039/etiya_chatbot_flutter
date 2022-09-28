@@ -148,7 +148,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    TOGGMobileSdk().setTOGGUser(
+    TOGGMobileSdk.shared.setTOGGUser(
       const ToggUser(
         firstName: 'john',
         lastName: 'doe',

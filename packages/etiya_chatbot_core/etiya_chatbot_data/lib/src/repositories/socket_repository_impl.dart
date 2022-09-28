@@ -14,7 +14,7 @@ class SocketClientRepositoryImpl extends SocketClientRepository {
           namespace: namespace,
           query: query,
         ) {
-    _socket = TOGGMobileSdk().getTOGGSocketClient(
+    _socket = TOGGMobileSdk.shared.getTOGGSocketClient(
       url: url,
       namespace: namespace,
       query: query,

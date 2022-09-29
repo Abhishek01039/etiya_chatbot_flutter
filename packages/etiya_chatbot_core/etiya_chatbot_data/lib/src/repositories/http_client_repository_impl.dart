@@ -18,7 +18,7 @@ class HttpClientRepositoryImpl extends HttpClientRepository {
           userId: userId,
           accessToken: accessToken,
         ) {
-    _httpClient = TOGGMobileSdk.shared.getTOGGHttpClient(null, true);
+    _httpClient = TOGGMobileSdk.shared.getTOGGHttpClient(enableLogs: true);
   }
 
   late final ITOGGHttpClient _httpClient;

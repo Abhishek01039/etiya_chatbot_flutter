@@ -17,7 +17,6 @@ dependencies:
       ref: customer/togg-flutter-v2.10.5
   #    path: ../etiya_chatbot_domain
 
-  http: ^0.13.4
   logger: ^1.1.0
   shared_preferences: ^2.0.15
   socket_io_client: ^2.0.0
@@ -28,8 +27,7 @@ dependencies:
   togg_mobile_super_app_sdk:
     git:
       url: https://gitlab.togg.com.tr/digitalplatform/togg-mobile/mobile-super-app/togg_mobile_superapp_sdk
-      #      ref: feat/flutter-v2.10.5
-      ref: a374716b3d0fb0dfbbbe76eb8413613d5c966602
+      ref: 4a7a975f859310c77430da5ecebd9da41922d4a3
 
   uuid: ^3.0.6
 

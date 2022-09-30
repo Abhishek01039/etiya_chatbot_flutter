@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
 import 'package:etiya_chatbot_domain/etiya_chatbot_domain.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:togg_mobile_super_app_sdk/togg_mobile_super_app_sdk.dart';
 
 class HttpClientRepositoryImpl extends HttpClientRepository {
@@ -30,7 +29,7 @@ class HttpClientRepositoryImpl extends HttpClientRepository {
   }) async {
     try {
       if (authUrl == null) return false;
-      final _response = await _httpClient.post(
+      final response = await _httpClient.post(
         endpoint: authUrl!,
         headers: <String, String>{
           'Content-Type': 'application/json',
@@ -41,10 +40,8 @@ class HttpClientRepositoryImpl extends HttpClientRepository {
           "chatId": "mobile:$userId"
         },
       );
-      final response = _response as http.Response?;
-      if (response == null) return false;
-      if (response.statusCode >= 200 && response.statusCode <= 300) {
-        final json = jsonDecode(response.body) as Map<String, dynamic>;
+      if (response.statusCode! >= 200 && response.statusCode! <= 300) {
+        final json = jsonDecode(response.data) as Map<String, dynamic>;
         final isAuth = json["isAuth"] as bool? ?? false;
         return isAuth;
       } else {
@@ -68,7 +65,7 @@ class HttpClientRepositoryImpl extends HttpClientRepository {
       if (accessToken != null) {
         headers.addAll({'Authorization': accessToken!});
       }
-      return await _httpClient.post(
+      await _httpClient.post(
         endpoint: '$serviceUrl/mobile',
         headers: headers,
         params: MessageRequest(

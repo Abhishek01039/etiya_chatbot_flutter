@@ -11,7 +11,7 @@ class EtiyaMessageInput extends StatelessWidget {
   }) : super(key: key);
 
   final textEditingController = TextEditingController();
-  final FocusNode ?focusNode;
+  final FocusNode? focusNode;
   final Function(String) sendButtonTapped;
   final String hintText;
 
@@ -33,7 +33,6 @@ class EtiyaMessageInput extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-
             child: TextField(
               key: ChatKeys.messageTextField.key,
               controller: textEditingController,
@@ -52,8 +51,10 @@ class EtiyaMessageInput extends StatelessWidget {
               ),
               textInputAction: TextInputAction.send,
               onSubmitted: (_) {
-                sendButtonTapped(textEditingController.text);
-                textEditingController.text = "";
+                if (textEditingController.text != "") {
+                  sendButtonTapped(textEditingController.text);
+                  textEditingController.text = "";
+                }
               },
             ),
           ),

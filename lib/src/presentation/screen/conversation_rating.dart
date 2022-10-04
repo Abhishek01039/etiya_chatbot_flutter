@@ -36,6 +36,10 @@ class ConversationRatingScreenUpdated extends HookWidget {
     final opacityController = useState<double>(0);
     final changeFinished = useState<bool>(false);
     final textEditing = useState<bool>(false);
+    useEffect(() {
+      focusNode = FocusNode();
+      return null;
+    });
 
     return Chatfold(
       appBarElements: [

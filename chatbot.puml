@@ -1,0 +1,419 @@
+@startuml chatbot
+set namespaceSeparator ::
+
+class "etiya_chatbot_flutter::gen::assets.gen.dart::$AssetsImagesGen" {
+  +AssetGenImage car
+  +AssetGenImage holder
+  +AssetGenImage logo
+}
+
+"etiya_chatbot_flutter::gen::assets.gen.dart::$AssetsImagesGen" o-- "etiya_chatbot_flutter::gen::assets.gen.dart::AssetGenImage"
+
+class "etiya_chatbot_flutter::gen::assets.gen.dart::Assets" {
+  {static} +$AssetsImagesGen images
+}
+
+"etiya_chatbot_flutter::gen::assets.gen.dart::Assets" o-- "etiya_chatbot_flutter::gen::assets.gen.dart::$AssetsImagesGen"
+
+class "etiya_chatbot_flutter::gen::assets.gen.dart::AssetGenImage" {
+  -String _assetName
+  +String path
+  +String keyName
+  +Image image()
+}
+
+class "etiya_chatbot_flutter::src::ui::etiya_chat_widget.dart::EtiyaChatWidget" {
+  +_EtiyaChatWidgetState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "etiya_chatbot_flutter::src::ui::etiya_chat_widget.dart::EtiyaChatWidget"
+
+class "etiya_chatbot_flutter::src::ui::etiya_chat_widget.dart::_EtiyaChatWidgetState" {
+  -Chat _chatView
+  +FocusNode focusNode
+  +void dispose()
+  +Widget build()
+}
+
+"etiya_chatbot_flutter::src::ui::etiya_chat_widget.dart::_EtiyaChatWidgetState" o-- "swifty_chat::src::chat.dart::Chat"
+"etiya_chatbot_flutter::src::ui::etiya_chat_widget.dart::_EtiyaChatWidgetState" o-- "flutter::src::widgets::focus_manager.dart::FocusNode"
+"flutter::src::widgets::framework.dart::State" <|-- "etiya_chatbot_flutter::src::ui::etiya_chat_widget.dart::_EtiyaChatWidgetState"
+
+class "etiya_chatbot_flutter::src::ui::etiya_message_input.dart::EtiyaMessageInput" {
+  +TextEditingController textEditingController
+  +FocusNode? focusNode
+  +dynamic Function(String) sendButtonTapped
+  +String hintText
+  +Widget build()
+}
+
+"etiya_chatbot_flutter::src::ui::etiya_message_input.dart::EtiyaMessageInput" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"etiya_chatbot_flutter::src::ui::etiya_message_input.dart::EtiyaMessageInput" o-- "flutter::src::widgets::focus_manager.dart::FocusNode"
+"etiya_chatbot_flutter::src::ui::etiya_message_input.dart::EtiyaMessageInput" o-- "null::dynamic Function(String)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "etiya_chatbot_flutter::src::ui::etiya_message_input.dart::EtiyaMessageInput"
+
+class "etiya_chatbot_flutter::src::ui::login_sheet.dart::LoginSheet" {
+  +State<LoginSheet> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "etiya_chatbot_flutter::src::ui::login_sheet.dart::LoginSheet"
+
+class "etiya_chatbot_flutter::src::ui::login_sheet.dart::_LoginSheetState" {
+  -GlobalKey<FormState> _formKey
+  -bool _isObscure
+  +TextEditingController emailFieldController
+  +TextEditingController passwordFieldController
+  +Widget build()
+}
+
+"etiya_chatbot_flutter::src::ui::login_sheet.dart::_LoginSheetState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"etiya_chatbot_flutter::src::ui::login_sheet.dart::_LoginSheetState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "etiya_chatbot_flutter::src::ui::login_sheet.dart::_LoginSheetState"
+
+class "etiya_chatbot_flutter::src::ui::login_sheet.dart::LoginButton" {
+  +void Function() onPressed
+  +String buttonText
+  +Widget build()
+}
+
+"etiya_chatbot_flutter::src::ui::login_sheet.dart::LoginButton" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "etiya_chatbot_flutter::src::ui::login_sheet.dart::LoginButton"
+
+class "etiya_chatbot_flutter::src::ui::image_viewer.dart::ImageViewer" {
+  +ImageProvider<Object> imageProvider
+  +void Function()? closeAction
+  +Widget build()
+}
+
+"etiya_chatbot_flutter::src::ui::image_viewer.dart::ImageViewer" o-- "flutter::src::painting::image_provider.dart::ImageProvider<Object>"
+"etiya_chatbot_flutter::src::ui::image_viewer.dart::ImageViewer" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "etiya_chatbot_flutter::src::ui::image_viewer.dart::ImageViewer"
+
+class "etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotCubit" {
+  +SocketClientRepository socketRepository
+  +HttpClientRepository httpClientRepository
+  +EtiyaChatbotBuilder chatbotBuilder
+  +String messageInputHintText
+  +String visitorId
+  -EtiyaChatUser _customerUser
+  -Future<void> _sendUserVisitMessage()
+  -Future<void> _sendCloseSessionMessage()
+  -void _insertNewMessages()
+  -void _cleanAllMessages()
+  +Future<void> userAddedMessage()
+  +void userAddedQuickReplyMessage()
+  +void userAddedCarouselMessage()
+  +Future<void> userSubmittedFeedbackMessage()
+  +Future<void> clearSession()
+  +Future<void> authenticate()
+  +Future<void> close()
+}
+
+"etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotCubit" o-- "etiya_chatbot_domain::src::repositories::socket_repository.dart::SocketClientRepository"
+"etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotCubit" o-- "etiya_chatbot_domain::src::repositories::http_client_repository.dart::HttpClientRepository"
+"etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotCubit" o-- "etiya_chatbot_flutter::src::etiya_chatbot.dart::EtiyaChatbotBuilder"
+"etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotCubit" o-- "etiya_chatbot_data::src::models::api::etiya_message_response.dart::EtiyaChatUser"
+"bloc::src::cubit.dart::Cubit" <|-- "etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotCubit"
+
+abstract class "etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotState" {
+  +List<Message> messages
+  +List<Object?> props
+}
+
+"equatable::src::equatable.dart::Equatable" <|-- "etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotState"
+
+class "etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotMessages" {
+}
+
+"etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotState" <|-- "etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotMessages"
+
+class "etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotUserAuthenticated" {
+  +bool isAuthenticated
+  +List<Object?> props
+}
+
+"etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotState" <|-- "etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotUserAuthenticated"
+
+class "etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotSessionEnded" {
+  +MessageResponse message
+  +List<Object?> props
+}
+
+"etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotSessionEnded" o-- "etiya_chatbot_data::src::models::api::etiya_message_response.dart::MessageResponse"
+"etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotState" <|-- "etiya_chatbot_flutter::src::cubit::chatbot_cubit.dart::ChatbotSessionEnded"
+
+class "etiya_chatbot_flutter::src::di::setup_locator.dart::DependencyInjection" {
+  {static} +List<RepositoryProvider<dynamic>> build()
+}
+
+abstract class "etiya_chatbot_flutter::src::util::logger.dart::Log" {
+  {static} +bool isEnabled
+  {static} -Logger _logger
+  {static} +void info()
+  {static} +void error()
+}
+
+"etiya_chatbot_flutter::src::util::logger.dart::Log" o-- "logger::src::logger.dart::Logger"
+
+class "etiya_chatbot_flutter::src::extensions::context_extension.dart::Dimension" {
+  {static} +double bottomBarHeight
+}
+
+class "etiya_chatbot_flutter::src::etiya_chatbot.dart::EtiyaChatbot" {
+  +EtiyaChatbotBuilder builder
+  +Widget getChatWidget()
+}
+
+"etiya_chatbot_flutter::src::etiya_chatbot.dart::EtiyaChatbot" o-- "etiya_chatbot_flutter::src::etiya_chatbot.dart::EtiyaChatbotBuilder"
+
+class "etiya_chatbot_flutter::src::etiya_chatbot.dart::EtiyaChatbotBuilder" {
+  +String serviceUrl
+  +String socketUrl
+  +String userName
+  +String? accessToken
+  +String? visitorId
+  +String? authUrl
+  +String? messageInputHintText
+  +UserAvatar? outgoingAvatar
+  +UserAvatar? incomingAvatar
+  +ChatTheme chatTheme
+  +EtiyaChatbotBuilder setAccessToken()
+  +EtiyaChatbotBuilder setAuthUrl()
+  +EtiyaChatbotBuilder setMessageInputHintText()
+  +EtiyaChatbotBuilder setIncomingAvatar()
+  +EtiyaChatbotBuilder setOutgoingAvatar()
+  +EtiyaChatbotBuilder setChatTheme()
+  +EtiyaChatbotBuilder setLoggingEnabled()
+  +EtiyaChatbot build()
+}
+
+"etiya_chatbot_flutter::src::etiya_chatbot.dart::EtiyaChatbotBuilder" o-- "swifty_chat_data::src::models::user_avatar.dart::UserAvatar"
+"etiya_chatbot_flutter::src::etiya_chatbot.dart::EtiyaChatbotBuilder" o-- "swifty_chat::src::theme::chat_theme.dart::ChatTheme"
+
+class "etiya_chatbot_flutter::src::presentation::screen::conversation_rating.dart::ConversationRatingScreenUpdated" {
+  +MessageResponse message
+  +ChatTheme theme
+  +double progress
+  +TextEditingController feedbackTextController
+  +ScrollController controller
+  +FocusNode focusNode
+  +Widget build()
+  -AsyncButton _submitButton()
+  +Future<void> sendFeedback()
+}
+
+"etiya_chatbot_flutter::src::presentation::screen::conversation_rating.dart::ConversationRatingScreenUpdated" o-- "etiya_chatbot_data::src::models::api::etiya_message_response.dart::MessageResponse"
+"etiya_chatbot_flutter::src::presentation::screen::conversation_rating.dart::ConversationRatingScreenUpdated" o-- "swifty_chat::src::theme::chat_theme.dart::ChatTheme"
+"etiya_chatbot_flutter::src::presentation::screen::conversation_rating.dart::ConversationRatingScreenUpdated" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"etiya_chatbot_flutter::src::presentation::screen::conversation_rating.dart::ConversationRatingScreenUpdated" o-- "flutter::src::widgets::scroll_controller.dart::ScrollController"
+"etiya_chatbot_flutter::src::presentation::screen::conversation_rating.dart::ConversationRatingScreenUpdated" o-- "flutter::src::widgets::focus_manager.dart::FocusNode"
+"flutter_hooks::src::framework.dart::HookWidget" <|-- "etiya_chatbot_flutter::src::presentation::screen::conversation_rating.dart::ConversationRatingScreenUpdated"
+
+class "etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::ChatbotPopup" {
+  +TopUpLevel level
+  +void Function()? action
+  +String? title
+  +String? description
+  +String? buttonText
+  +String icon
+  +String? iconUrl
+  +bool showMessageCancelButton
+  +State<ChatbotPopup> createState()
+}
+
+"etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::ChatbotPopup" o-- "etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::TopUpLevel"
+"etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::ChatbotPopup" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::ChatbotPopup"
+
+class "etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::_ChatbotPopupState" {
+  +AnimationController controller
+  +Animation<double> scaleAnimation
+  +Widget build()
+  +void initState()
+}
+
+"etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::_ChatbotPopupState" o-- "flutter::src::animation::animation_controller.dart::AnimationController"
+"etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::_ChatbotPopupState" o-- "flutter::src::animation::animation.dart::Animation<double>"
+"flutter::src::widgets::framework.dart::State" <|-- "etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::_ChatbotPopupState"
+"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin" <|-- "etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::_ChatbotPopupState"
+
+class "etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::TopUpLevel" {
+  +int index
+  {static} +List<TopUpLevel> values
+  {static} +TopUpLevel error
+  {static} +TopUpLevel success
+  {static} +TopUpLevel message
+  {static} +TopUpLevel info
+}
+
+"etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::TopUpLevel" o-- "etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::TopUpLevel"
+"dart::core::Enum" <|-- "etiya_chatbot_flutter::src::presentation::widgets::core::chatbot_popup.dart::TopUpLevel"
+
+class "etiya_chatbot_flutter::src::presentation::widgets::core::chatfold.dart::Chatfold" {
+  +List<Widget> appBarElements
+  +List<Widget> scaffoldBackGround
+  +List<Widget> elements
+  +BoxDecoration? appBarDecoration
+  +Color? color
+  +Widget build()
+}
+
+"etiya_chatbot_flutter::src::presentation::widgets::core::chatfold.dart::Chatfold" o-- "flutter::src::painting::box_decoration.dart::BoxDecoration"
+"etiya_chatbot_flutter::src::presentation::widgets::core::chatfold.dart::Chatfold" o-- "dart::ui::Color"
+"flutter_hooks::src::framework.dart::HookWidget" <|-- "etiya_chatbot_flutter::src::presentation::widgets::core::chatfold.dart::Chatfold"
+
+class "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::async_button.dart::AsyncButton" {
+  +String? text
+  +ButtonStyle? buttonStyle
+  +Widget? child
+  +FutureOr<void> Function()? onPressed
+  +bool isEnabled
+  +Color? color
+  +Color? textColor
+  +double height
+  +EdgeInsets? margin
+  +double? width
+  +MaterialStateProperty<OutlinedBorder?>? shape
+  +Widget build()
+  -ButtonStyle _defaultButtonStyle()
+  -Future<void> _onPressed()
+}
+
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::async_button.dart::AsyncButton" o-- "flutter::src::material::button_style.dart::ButtonStyle"
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::async_button.dart::AsyncButton" o-- "flutter::src::widgets::framework.dart::Widget"
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::async_button.dart::AsyncButton" o-- "null::FutureOr<void> Function()"
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::async_button.dart::AsyncButton" o-- "dart::ui::Color"
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::async_button.dart::AsyncButton" o-- "flutter::src::painting::edge_insets.dart::EdgeInsets"
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::async_button.dart::AsyncButton" o-- "flutter::src::material::material_state.dart::MaterialStateProperty<OutlinedBorder>"
+"flutter_hooks::src::framework.dart::HookWidget" <|-- "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::async_button.dart::AsyncButton"
+
+class "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::CustomSlider" {
+  +Color inActiveTrackColor
+  +double trackHeight
+  +int? assetImageHeight
+  +int? assetImageWidth
+  +Slider slider
+  +LinearGradient gradient
+  +State<CustomSlider> createState()
+}
+
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::CustomSlider" o-- "dart::ui::Color"
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::CustomSlider" o-- "flutter::src::material::slider.dart::Slider"
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::CustomSlider" o-- "flutter::src::painting::gradient.dart::LinearGradient"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::CustomSlider"
+
+class "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::_CustomSliderState" {
+  +double intValue
+  +Future<Image> loadImage()
+  +Future<Image> loadImage2()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::_CustomSliderState"
+
+class "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::GradientRectSliderTrackShape" {
+  +LinearGradient gradient
+  +double trackHeight
+  +Color inactiveColor
+  +void paint()
+}
+
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::GradientRectSliderTrackShape" o-- "flutter::src::painting::gradient.dart::LinearGradient"
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::GradientRectSliderTrackShape" o-- "dart::ui::Color"
+"flutter::src::material::slider_theme.dart::SliderTrackShape" <|-- "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::GradientRectSliderTrackShape"
+"flutter::src::material::slider_theme.dart::BaseSliderTrackShape" <|-- "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::GradientRectSliderTrackShape"
+
+class "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::SliderThumbImage" {
+  +Image image
+  +Image carImage
+  +Size getPreferredSize()
+  +void paint()
+}
+
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::SliderThumbImage" o-- "dart::ui::Image"
+"flutter::src::material::slider_theme.dart::SliderComponentShape" <|-- "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::custom_slider.dart::SliderThumbImage"
+
+class "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::animated_car.dart::AnimatedCar" {
+  +ValueNotifier<double> ratingProgress
+  +Size size
+  +Widget build()
+}
+
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::animated_car.dart::AnimatedCar" o-- "flutter::src::foundation::change_notifier.dart::ValueNotifier<double>"
+"etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::animated_car.dart::AnimatedCar" o-- "dart::ui::Size"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "etiya_chatbot_flutter::src::presentation::widgets::conversation_rating::animated_car.dart::AnimatedCar"
+
+abstract class "etiya_chatbot_flutter::src::localization::generated::app_localizations.dart::AppLocalizations" {
+  +String localeName
+  {static} +LocalizationsDelegate<AppLocalizations> delegate
+  {static} +List<LocalizationsDelegate<dynamic>> localizationsDelegates
+  {static} +List<Locale> supportedLocales
+  +String submit
+  +String enter_valid_email
+  +String end_message
+  +String email_address
+  +String enter_non_empty_password
+  +String password
+  +String login
+  {static} +AppLocalizations? of()
+}
+
+"etiya_chatbot_flutter::src::localization::generated::app_localizations.dart::AppLocalizations" o-- "flutter::src::widgets::localizations.dart::LocalizationsDelegate<AppLocalizations>"
+
+class "etiya_chatbot_flutter::src::localization::generated::app_localizations.dart::_AppLocalizationsDelegate" {
+  +Future<AppLocalizations> load()
+  +bool isSupported()
+  +bool shouldReload()
+}
+
+"flutter::src::widgets::localizations.dart::LocalizationsDelegate" <|-- "etiya_chatbot_flutter::src::localization::generated::app_localizations.dart::_AppLocalizationsDelegate"
+
+class "etiya_chatbot_flutter::src::localization::generated::app_localizations_tr.dart::AppLocalizationsTr" {
+  +String submit
+  +String enter_valid_email
+  +String email_address
+  +String end_message
+  +String enter_non_empty_password
+  +String password
+  +String login
+}
+
+"etiya_chatbot_flutter::src::localization::generated::app_localizations.dart::AppLocalizations" <|-- "etiya_chatbot_flutter::src::localization::generated::app_localizations_tr.dart::AppLocalizationsTr"
+
+class "etiya_chatbot_flutter::src::localization::generated::app_localizations_en.dart::AppLocalizationsEn" {
+  +String submit
+  +String enter_valid_email
+  +String email_address
+  +String end_message
+  +String enter_non_empty_password
+  +String password
+  +String login
+}
+
+"etiya_chatbot_flutter::src::localization::generated::app_localizations.dart::AppLocalizations" <|-- "etiya_chatbot_flutter::src::localization::generated::app_localizations_en.dart::AppLocalizationsEn"
+
+class "etiya_chatbot_flutter::src::localization::i10n.dart::L10n" {
+  {static} +L10n enUS
+  {static} +L10n tr
+  +String value
+  {static} +List<Locale> all
+  {static} +List<L10n> values
+  +Locale getLocale()
+  +String toUiLocales()
+  {static} +L10n get()
+}
+
+"etiya_chatbot_flutter::src::localization::i10n.dart::L10n" o-- "etiya_chatbot_flutter::src::localization::i10n.dart::L10n"
+
+class "etiya_chatbot_flutter::src::localization::localization_delegate.dart::ChatBotAppLocalizationsDelegate" {
+  {static} +AppLocalizations instance
+  +bool isSupported()
+  +Future<AppLocalizations> load()
+  +bool shouldReload()
+}
+
+"etiya_chatbot_flutter::src::localization::localization_delegate.dart::ChatBotAppLocalizationsDelegate" o-- "etiya_chatbot_flutter::src::localization::generated::app_localizations.dart::AppLocalizations"
+"flutter::src::widgets::localizations.dart::LocalizationsDelegate" <|-- "etiya_chatbot_flutter::src::localization::localization_delegate.dart::ChatBotAppLocalizationsDelegate"
+
+
+@enduml

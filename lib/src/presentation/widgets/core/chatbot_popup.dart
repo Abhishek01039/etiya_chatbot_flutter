@@ -137,7 +137,6 @@ class _ChatbotPopupState extends State<ChatbotPopup>
 
 void alertCustomMessage(
   BuildContext context,
-  String? title,
   String description, {
   bool dismissable = true,
   bool useRootNavigator = false,
@@ -155,7 +154,6 @@ void alertCustomMessage(
       return WillPopScope(
         onWillPop: () async => dismissable,
         child: ChatbotPopup.message(
-          title: title,
           description: description,
           icon: icon ?? 'assets/images/logo.png',
           iconUrl: iconUrl,

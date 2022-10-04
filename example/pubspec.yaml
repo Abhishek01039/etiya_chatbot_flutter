@@ -12,12 +12,12 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.4
-
+  dcdg: ^4.1.0
   etiya_chatbot_flutter:
-    path: ../
-#    git:
-#      url: https://github.com/Etiya/etiya_chatbot_flutter
-#      ref: customer/togg
+    # path: ../
+    git:
+      url: https://github.com/Etiya/etiya_chatbot_flutter
+      ref: refactor/temp-togg
 
   flutter:
     sdk: flutter

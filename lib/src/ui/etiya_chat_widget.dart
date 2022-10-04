@@ -1,11 +1,12 @@
 import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
 import 'package:etiya_chatbot_flutter/etiya_chatbot_flutter.dart';
 import 'package:etiya_chatbot_flutter/src/cubit/chatbot_cubit.dart';
-import 'package:etiya_chatbot_flutter/src/presentation/screen/conversation_feedback_screen.dart';
+import 'package:etiya_chatbot_flutter/src/presentation/screen/conversation_rating.dart';
 import 'package:etiya_chatbot_flutter/src/ui/etiya_message_input.dart';
 import 'package:etiya_chatbot_flutter/src/ui/image_viewer.dart';
 import 'package:etiya_chatbot_flutter/src/ui/login_sheet.dart';
 import 'package:etiya_chatbot_flutter/src/util/logger.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,13 +35,16 @@ class _EtiyaChatWidgetState extends State<EtiyaChatWidget> {
           _chatView.scrollToBottom();
         } else if (state is ChatbotSessionEnded) {
           focusNode.unfocus();
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => BlocProvider.value(
-                value: context.read<ChatbotCubit>(),
-                child: ConversationRatingScreen(
-                  message: state.message,
-                  theme: context.read<ChatTheme>(),
+          Future.delayed(
+            const Duration(milliseconds: 500),
+            () => Navigator.of(context).push(
+              CupertinoPageRoute(
+                builder: (_) => BlocProvider.value(
+                  value: context.read<ChatbotCubit>(),
+                  child: ConversationRatingScreenUpdated(
+                    state.message,
+                    context.read<ChatTheme>(),
+                  ),
                 ),
               ),
             ),

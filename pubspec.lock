@@ -239,6 +239,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  dcdg:
+    dependency: "direct dev"
+    description:
+      name: dcdg
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.0"
   diff_match_patch:
     dependency: transitive
     description:
@@ -374,6 +381,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  flutter_screenutil:
+    dependency: "direct main"
+    description:
+      name: flutter_screenutil
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.5.4"
   flutter_svg:
     dependency: transitive
     description:

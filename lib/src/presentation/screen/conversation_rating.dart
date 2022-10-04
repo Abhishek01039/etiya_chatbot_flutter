@@ -55,7 +55,7 @@ class ConversationRatingScreenUpdated extends HookWidget {
       elements: [
         if (!textEditing.value)
           Expanded(
-            flex: 3,
+            flex: 2,
             child: ToggTitle(message, size),
           ),
         if (!textEditing.value)

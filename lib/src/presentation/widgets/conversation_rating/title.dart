@@ -41,7 +41,7 @@ Padding ToggTitle(MessageResponse chatbotMessage, Size size) {
           "p": Style(
             padding: const EdgeInsets.all(8),
             textAlign: TextAlign.center,
-            fontSize: const FontSize(17),
+            fontSize: const FontSize(16),
             fontWeight: FontWeight.w400,
           ),
         },

@@ -43,11 +43,11 @@ Widget ToggRating(
         color: const Color.fromRGBO(255, 255, 255, 1),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
         child: ListView.separated(
           separatorBuilder: (context, index) => const SizedBox(
-            width: 20,
-            height: 120,
+            width: 12,
+            height: 15,
           ),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -72,8 +72,7 @@ Widget ToggRating(
               ).then((value) => changeFinished.value = false);
 
               ratingScore.value = index.toDouble();
-              ratingProgress.value =
-                  1 + index.toDouble() - (index >= 2 ? .4 : .6);
+              ratingProgress.value = ratingRatio(index + 1);
               return null;
             },
           ),
@@ -106,11 +105,11 @@ InkWell ratingElement({
             color: isActive
                 ? activeColor
                 : const Color(0xff504642).withOpacity(.2),
-            size: isActive ? 28 : 20,
+            size: isActive ? 26 : 18,
           ),
         ),
         const SizedBox(
-          height: 9,
+          height: 7,
         ),
         AutoSizeText(
           text,
@@ -124,4 +123,21 @@ InkWell ratingElement({
       ],
     ),
   );
+}
+
+double ratingRatio(int score) {
+  switch (score) {
+    case 1:
+      return 1 * 0.47;
+    case 2:
+      return score * 0.69;
+    case 3:
+      return score * 0.81;
+    case 4:
+      return score * 0.87;
+    case 5:
+      return score * 0.89;
+    default:
+      return score * 1;
+  }
 }

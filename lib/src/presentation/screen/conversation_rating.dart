@@ -44,9 +44,11 @@ class ConversationRatingScreenUpdated extends HookWidget {
     return Chatfold(
       appBarElements: [
         Expanded(
+          flex: 2,
           child: ToggBackButton(context),
         ),
         Expanded(
+          flex: 2,
           child: ToggLogo(),
         ),
         const Spacer()
@@ -55,19 +57,21 @@ class ConversationRatingScreenUpdated extends HookWidget {
       elements: [
         if (!textEditing.value)
           Expanded(
-            flex: 2,
+            flex: 4,
             child: ToggTitle(message, size),
           ),
         if (!textEditing.value)
           Expanded(
+            flex: 2,
             child: AnimatedCar(ratingProgress: ratingProgress, size: size),
           ),
         if (!textEditing.value)
           Expanded(
+            flex: 2,
             child: CarSlider(ratingScore, ratingProgress, changeFinished),
           ),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: ToggRating(
             ratingScore,
             ratingProgress,
@@ -90,7 +94,7 @@ class ConversationRatingScreenUpdated extends HookWidget {
             ),
           ),
         Expanded(
-          flex: 3,
+          flex: 6,
           child: ToggFeedbackWidget(
             onComplete: () {
               changeFinished.value = false;
@@ -110,6 +114,7 @@ class ConversationRatingScreenUpdated extends HookWidget {
           ),
         ),
         Expanded(
+          flex: 2,
           child: _submitButton(ratingScore, ratingProgress, context, size),
         ),
         const SizedBox(

@@ -73,7 +73,7 @@ Widget ToggRating(
 
               ratingScore.value = index.toDouble();
               ratingProgress.value =
-                  1 + index.toDouble() - (index >= 2 ? .3 : .1);
+                  1 + index.toDouble() - (index >= 2 ? .4 : .6);
               return null;
             },
           ),

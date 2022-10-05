@@ -14,10 +14,10 @@ dependencies:
   cupertino_icons: ^1.0.4
   dcdg: ^4.1.0
   etiya_chatbot_flutter:
-    # path: ../
-    git:
-      url: https://github.com/Etiya/etiya_chatbot_flutter
-      ref: customer/togg-flutter-v2.10.5
+   path: ../
+    # git:
+      # url: https://github.com/Etiya/etiya_chatbot_flutter
+      # ref: customer/togg-flutter-v2.10.5
 
   flutter:
     sdk: flutter

@@ -251,7 +251,7 @@ packages:
     description:
       path: "packages/etiya_chatbot_core/etiya_chatbot_data"
       ref: "customer/togg-flutter-v2.10.5"
-      resolved-ref: c2815423a4a43813eafafbdfb5358fb58c83ec7f
+      resolved-ref: "8867b7c18bba6e959ffe14494dbbea9c404257a6"
       url: "https://github.com/Etiya/etiya_chatbot_flutter"
     source: git
     version: "1.0.0"
@@ -260,25 +260,23 @@ packages:
     description:
       path: "packages/etiya_chatbot_core/etiya_chatbot_domain"
       ref: "customer/togg-flutter-v2.10.5"
-      resolved-ref: c2815423a4a43813eafafbdfb5358fb58c83ec7f
+      resolved-ref: "8867b7c18bba6e959ffe14494dbbea9c404257a6"
       url: "https://github.com/Etiya/etiya_chatbot_flutter"
     source: git
     version: "1.0.0"
   etiya_chatbot_flutter:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "customer/togg-flutter-v2.10.5"
-      resolved-ref: c2815423a4a43813eafafbdfb5358fb58c83ec7f
-      url: "https://github.com/Etiya/etiya_chatbot_flutter"
-    source: git
+      path: ".."
+      relative: true
+    source: path
     version: "0.1.1"
   etiya_chatbot_mocked_data:
     dependency: transitive
     description:
       path: "packages/etiya_chatbot_core/etiya_chatbot_mocked_data"
       ref: "customer/togg-flutter-v2.10.5"
-      resolved-ref: c2815423a4a43813eafafbdfb5358fb58c83ec7f
+      resolved-ref: "8867b7c18bba6e959ffe14494dbbea9c404257a6"
       url: "https://github.com/Etiya/etiya_chatbot_flutter"
     source: git
     version: "1.0.0"

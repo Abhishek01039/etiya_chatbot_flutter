@@ -71,7 +71,7 @@ class ConversationRatingScreenUpdated extends HookWidget {
             child: CarSlider(ratingScore, ratingProgress, changeFinished),
           ),
         Expanded(
-          flex: 3,
+          flex: 4,
           child: ToggRating(
             ratingScore,
             ratingProgress,
@@ -117,8 +117,8 @@ class ConversationRatingScreenUpdated extends HookWidget {
           flex: 2,
           child: _submitButton(ratingScore, ratingProgress, context, size),
         ),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: context.screenHeight / 100,
         )
       ],
     );

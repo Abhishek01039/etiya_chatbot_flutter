@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:etiya_chatbot_data/src/models/api/etiya_message_response.dart';
 import 'package:flutter/material.dart';
+import 'package:etiya_chatbot_flutter/src/extensions/context_extension.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 List<Color> rateColors = [
@@ -26,6 +27,10 @@ Widget ToggRating(
   ValueNotifier<bool> changeFinished,
   MessageResponse chatbotMessage,
 ) {
+  Size screenSize = WidgetsBinding.instance!.window.physicalSize;
+  double screenWidth = screenSize.width;
+  double screenHeight = screenSize.height;
+
   return Padding(
     padding: const EdgeInsets.symmetric(
       horizontal: 24.0,
@@ -45,9 +50,8 @@ Widget ToggRating(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
         child: ListView.separated(
-          separatorBuilder: (context, index) => const SizedBox(
-            width: 12,
-            height: 15,
+          separatorBuilder: (context, index) => SizedBox(
+            width: screenWidth * 0.02,
           ),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -113,7 +117,7 @@ InkWell ratingElement({
         ),
         AutoSizeText(
           text,
-          maxLines: 2,
+          maxLines: 3,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.w500,
@@ -128,15 +132,15 @@ InkWell ratingElement({
 double ratingRatio(int score) {
   switch (score) {
     case 1:
-      return 1 * 0.47;
+      return 1 * 0.45;
     case 2:
-      return score * 0.69;
+      return score * 0.71;
     case 3:
-      return score * 0.81;
+      return score * 0.84;
     case 4:
-      return score * 0.87;
+      return score * 0.90;
     case 5:
-      return score * 0.89;
+      return score * 0.92;
     default:
       return score * 1;
   }

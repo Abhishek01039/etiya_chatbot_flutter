@@ -14,34 +14,35 @@ class Chatfold extends HookWidget {
       this.appBarDecoration});
   @override
   Widget build(BuildContext context) {
-
-    return Center(
-      child: SizedBox(
-        height: context.screenHeight,
-        width: context.screenWidth,
-        child: Scaffold(
-          backgroundColor: color,
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(context.screenHeight / 14.7),
-            child: DecoratedBox(
-              decoration: appBarDecoration ??
-                  BoxDecoration(color: Colors.transparent.withOpacity(0)),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(children: appBarElements),
+    return SingleChildScrollView(
+      child: Center(
+        child: SizedBox(
+          height: context.screenHeight,
+          width: context.screenWidth,
+          child: Scaffold(
+            backgroundColor: color,
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(context.screenHeight / 14.7),
+              child: DecoratedBox(
+                decoration: appBarDecoration ??
+                    BoxDecoration(color: Colors.transparent.withOpacity(0)),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(children: appBarElements),
+                ),
               ),
             ),
-          ),
-          body: Stack(
-            fit: StackFit.expand,
-            children: [
-              ...scaffoldBackGround,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: elements,
-              )
-            ],
+            body: Stack(
+              fit: StackFit.expand,
+              children: [
+                ...scaffoldBackGround,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: elements,
+                )
+              ],
+            ),
           ),
         ),
       ),

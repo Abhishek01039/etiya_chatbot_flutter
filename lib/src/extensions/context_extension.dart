@@ -7,6 +7,7 @@ class Dimension {
 }
 
 extension BuildContextExt on BuildContext {
+  static const smallDeviceReference = 667;
   double get screenHeightExceptBottomBarAndAppBar {
     final screenHeight = MediaQuery.of(this).size.height;
     final spacings = MediaQueryData.fromWindow(window).viewPadding.bottom +
@@ -17,7 +18,8 @@ extension BuildContextExt on BuildContext {
   }
 
   double get screenHeight {
-    return MediaQuery.of(this).size.height;
+    final height = MediaQuery.of(this).size.height;
+    return height <= smallDeviceReference ? height * 1.2 : height;
   }
 
   double get screenWidth {

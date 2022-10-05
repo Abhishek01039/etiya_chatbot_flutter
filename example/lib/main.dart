@@ -28,6 +28,8 @@ class InitialScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.indigo)),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(

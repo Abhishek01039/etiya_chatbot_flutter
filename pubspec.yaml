@@ -8,31 +8,21 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  bloc: ^8.0.3
 
-  equatable: ^2.0.3
 
-  etiya_chatbot_data:
+ 
+  shared_preferences: ^2.0.15
+  socket_io_client: ^2.0.0
+  #  swifty_chat_data: ^0.1.0
+  # https://pub.dev/packages/swifty_chat
+
+
+  togg_mobile_super_app_sdk:
     git:
-      url: https://github.com/Etiya/etiya_chatbot_flutter
-      path: packages/etiya_chatbot_core/etiya_chatbot_data
-      ref: customer/togg-flutter-v2.10.5
-  #    path: packages/etiya_chatbot_core/etiya_chatbot_data
+      url: https://gitlab.togg.com.tr/digitalplatform/togg-mobile/mobile-super-app/togg_mobile_superapp_sdk
+      ref: 4a7a975f859310c77430da5ecebd9da41922d4a3
 
-  etiya_chatbot_domain:
-    git:
-      url: https://github.com/Etiya/etiya_chatbot_flutter
-      path: packages/etiya_chatbot_core/etiya_chatbot_domain
-      ref: customer/togg-flutter-v2.10.5
-  #    path: packages/etiya_chatbot_core/etiya_chatbot_domain
-
-  etiya_chatbot_mocked_data:
-    git:
-      url: https://github.com/Etiya/etiya_chatbot_flutter
-      path: packages/etiya_chatbot_core/etiya_chatbot_mocked_data
-      ref: customer/togg-flutter-v2.10.5
-  #    path: packages/etiya_chatbot_core/etiya_chatbot_mocked_data
-
+ 
   flutter:
     sdk: flutter
 
@@ -46,14 +36,15 @@ dependencies:
   # https://pub.dev/packages/font_awesome_flutter
   font_awesome_flutter: ^10.1.0
 
+  bloc: ^8.0.3
+
+  equatable: ^2.0.3
+
   # https://pub.dev/packages/logger
   logger: ^1.1.0
 
   # https://pub.dev/packages/photo_view
   photo_view: ^0.14.0
-
-  # https://pub.dev/packages/swifty_chat
-  swifty_chat: ^1.2.0
 
   # https://pub.dev/packages/url_launcher
   url_launcher: ^6.1.4
@@ -71,6 +62,8 @@ dependencies:
 dev_dependencies:
   bloc_test: ^9.0.3
   build_runner: ^2.1.11
+  carousel_slider: ^4.1.1
+  dart_extensions: ^2.2.0
   dcdg: ^4.1.0
   flutter_lints: ^1.0.4
   flutter_test:
@@ -80,6 +73,7 @@ dev_dependencies:
   mocktail: ^0.3.0
 
   styled_widget: ^0.4.0+3
+  swifty_chat_data: ^0.0.2
 
 
 # The following section is specific to Flutter.

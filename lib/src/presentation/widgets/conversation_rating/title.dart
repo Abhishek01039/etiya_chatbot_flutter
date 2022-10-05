@@ -1,4 +1,4 @@
-import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
+import 'package:etiya_chatbot_flutter/src/core/etiya_chatbot_data/models/api/etiya_message_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:show_up_animation/show_up_animation.dart';

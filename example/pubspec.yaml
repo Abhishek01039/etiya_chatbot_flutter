@@ -12,7 +12,6 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.4
-  dcdg: ^4.1.0
   etiya_chatbot_flutter:
    path: ../
     # git:

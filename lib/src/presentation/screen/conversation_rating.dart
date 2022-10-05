@@ -1,5 +1,5 @@
-import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
 import 'package:etiya_chatbot_flutter/etiya_chatbot_flutter.dart';
+import 'package:etiya_chatbot_flutter/src/core/etiya_chatbot_data/models/api/etiya_message_response.dart';
 import 'package:etiya_chatbot_flutter/src/cubit/chatbot_cubit.dart';
 import 'package:etiya_chatbot_flutter/src/extensions/context_extension.dart';
 import 'package:etiya_chatbot_flutter/src/localization/localization.dart';

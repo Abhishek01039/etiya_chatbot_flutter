@@ -1,9 +1,11 @@
-import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
-import 'package:etiya_chatbot_domain/etiya_chatbot_domain.dart';
 import 'package:etiya_chatbot_flutter/etiya_chatbot_flutter.dart';
+import 'package:etiya_chatbot_flutter/src/core/etiya_chatbot_data/repositories/http_client_repository_impl.dart';
+import 'package:etiya_chatbot_flutter/src/core/etiya_chatbot_data/repositories/socket_repository_impl.dart';
+import 'package:etiya_chatbot_flutter/src/core/etiya_chatbot_domain/repositories/http_client_repository.dart';
+import 'package:etiya_chatbot_flutter/src/core/etiya_chatbot_domain/repositories/socket_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:togg_mobile_super_app_sdk/togg_mobile_super_app_sdk.dart';
-
+import '../core/swifty_chat/swifty_chat.dart';
 class DependencyInjection {
   const DependencyInjection._();
 

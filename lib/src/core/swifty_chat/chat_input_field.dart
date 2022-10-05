@@ -1,19 +1,18 @@
+import 'package:etiya_chatbot_flutter/etiya_chatbot_flutter.dart';
 import 'package:etiya_chatbot_flutter/src/core/swifty_chat/extensions/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
-class EtiyaMessageInput extends StatelessWidget {
-  EtiyaMessageInput({
+
+class MessageInputField extends StatelessWidget {
+  MessageInputField({
     Key? key,
-    this.focusNode,
     required this.sendButtonTapped,
-    this.hintText = "Aa",
   }) : super(key: key);
 
   final textEditingController = TextEditingController();
-  final FocusNode? focusNode;
+
   final Function(String) sendButtonTapped;
-  final String hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +20,14 @@ class EtiyaMessageInput extends StatelessWidget {
       height: 70.0,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 2,
-            offset: Offset(2, -2),
-          ),
-        ],
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black26,
+                blurRadius: 2,
+                offset: Offset(2, -2)
+            )
+          ]
       ),
       child: Row(
         children: <Widget>[
@@ -36,25 +35,23 @@ class EtiyaMessageInput extends StatelessWidget {
             child: TextField(
               key: ChatKeys.messageTextField.key,
               controller: textEditingController,
-              focusNode: focusNode,
+              focusNode: FocusNode(),
               textCapitalization: TextCapitalization.sentences,
-              decoration: InputDecoration.collapsed(
-                hintText: hintText,
-                hintStyle: const TextStyle(
+              decoration: const InputDecoration.collapsed(
+                hintText: 'Write your reply...',
+                hintStyle: TextStyle(
                   fontSize: 16.0,
                   color: Color(0xffAEA4A3),
                 ),
               ),
+              textInputAction: TextInputAction.send,
               style: const TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
               ),
-              textInputAction: TextInputAction.send,
               onSubmitted: (_) {
-                if (textEditingController.text != "") {
-                  sendButtonTapped(textEditingController.text);
-                  textEditingController.text = "";
-                }
+                sendButtonTapped(textEditingController.text);
+                textEditingController.text = "";
               },
             ),
           ),

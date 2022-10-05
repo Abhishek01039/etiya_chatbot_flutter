@@ -1,12 +1,12 @@
-import 'package:etiya_chatbot_domain/etiya_chatbot_domain.dart';
+import 'package:etiya_chatbot_flutter/src/core/etiya_chatbot_domain/repositories/http_client_repository.dart';
+import 'package:etiya_chatbot_flutter/src/core/etiya_chatbot_domain/repositories/socket_repository.dart';
 import 'package:etiya_chatbot_flutter/src/cubit/chatbot_cubit.dart';
 import 'package:etiya_chatbot_flutter/src/di/setup_locator.dart';
 import 'package:etiya_chatbot_flutter/src/ui/etiya_chat_widget.dart';
 import 'package:etiya_chatbot_flutter/src/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:swifty_chat/swifty_chat.dart';
-
+import 'package:etiya_chatbot_flutter/src/core/swifty_chat/swifty_chat.dart';
 class EtiyaChatbot {
   final EtiyaChatbotBuilder builder;
 

@@ -1,5 +1,7 @@
-import 'package:etiya_chatbot_data/etiya_chatbot_data.dart';
-import 'package:etiya_chatbot_flutter/etiya_chatbot_flutter.dart';
+import 'package:etiya_chatbot_flutter/src/core/etiya_chatbot_data/models/etiya_login_message_kind.dart';
+import 'package:etiya_chatbot_flutter/src/core/swifty_chat/chat.dart';
+import 'package:etiya_chatbot_flutter/src/core/swifty_chat/message_cell_size_configurator.dart';
+import 'package:etiya_chatbot_flutter/src/core/swifty_chat/theme/chat_theme.dart';
 import 'package:etiya_chatbot_flutter/src/cubit/chatbot_cubit.dart';
 import 'package:etiya_chatbot_flutter/src/presentation/screen/conversation_rating.dart';
 import 'package:etiya_chatbot_flutter/src/ui/etiya_message_input.dart';
@@ -10,7 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import '../core/swifty_chat/swifty_chat.dart';
 class EtiyaChatWidget extends StatefulWidget {
   const EtiyaChatWidget();
 

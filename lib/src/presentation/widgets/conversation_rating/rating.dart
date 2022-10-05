@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:etiya_chatbot_flutter/src/core/etiya_chatbot_data/models/api/etiya_message_response.dart';
 import 'package:flutter/material.dart';
+import 'package:etiya_chatbot_flutter/src/extensions/context_extension.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 List<Color> rateColors = [
@@ -26,9 +27,9 @@ Widget ToggRating(
   ValueNotifier<bool> changeFinished,
   MessageResponse chatbotMessage,
 ) {
-  final Size screenSize = WidgetsBinding.instance!.window.physicalSize;
-  final double screenWidth = screenSize.width;
-  final double screenHeight = screenSize.height;
+  Size screenSize = WidgetsBinding.instance!.window.physicalSize;
+  double screenWidth = screenSize.width;
+  double screenHeight = screenSize.height;
 
   return Padding(
     padding: const EdgeInsets.symmetric(

@@ -84,4 +84,6 @@ abstract class ChatTheme {
 
   /// FontFamily on p, h1, h2, h3, h4, h5 elements.
   String? get htmlTextFontFamily;
+
+  int? get maxMessageLength;
 }

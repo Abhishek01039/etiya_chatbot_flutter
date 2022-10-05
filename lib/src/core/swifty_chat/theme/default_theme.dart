@@ -83,6 +83,10 @@ class DefaultChatTheme extends ChatTheme {
 
   @override
   String? get htmlTextFontFamily => 'Avenir';
+
+  @override
+  // TODO: implement maxMessageLength
+  int? get maxMessageLength => throw UnimplementedError();
 }
 
 /// Dark chat theme which extends [ChatTheme]
@@ -167,4 +171,8 @@ class DarkChatTheme extends ChatTheme {
 
   @override
   String? get htmlTextFontFamily => 'Avenir';
+
+  @override
+  // TODO: implement maxMessageLength
+  int? get maxMessageLength => 200;
 }

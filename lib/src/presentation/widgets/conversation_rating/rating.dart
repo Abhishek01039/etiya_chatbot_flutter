@@ -27,13 +27,9 @@ Widget ToggRating(
   ValueNotifier<bool> changeFinished,
   MessageResponse chatbotMessage,
 ) {
-  Size screenSize = WidgetsBinding.instance!.window.physicalSize;
-  double screenWidth = screenSize.width;
-  double screenHeight = screenSize.height;
-
   return Padding(
     padding: const EdgeInsets.symmetric(
-      horizontal: 24.0,
+      horizontal: 18.0,
     ),
     child: DecoratedBox(
       decoration: BoxDecoration(
@@ -48,14 +44,12 @@ Widget ToggRating(
         color: const Color.fromRGBO(255, 255, 255, 1),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
-        child: ListView.separated(
-          separatorBuilder: (context, index) => SizedBox(
-            width: screenWidth * 0.02,
-          ),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 5),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          scrollDirection: Axis.horizontal,
           itemCount:
               chatbotMessage.rawMessage?.data?.payload?.emojiText?.length ?? 5,
           itemBuilder: (context, index) => ratingElement(
@@ -97,6 +91,7 @@ InkWell ratingElement({
   return InkWell(
     onTap: ontap,
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           padding: EdgeInsets.all(isActive ? 5 : 9),
@@ -132,15 +127,15 @@ InkWell ratingElement({
 double ratingRatio(int score) {
   switch (score) {
     case 1:
-      return 1 * 0.45;
+      return 0.50;
     case 2:
-      return score * 0.71;
+      return 1.50;
     case 3:
-      return score * 0.84;
+      return 2.50;
     case 4:
-      return score * 0.90;
+      return 3.50;
     case 5:
-      return score * 0.92;
+      return 4.50;
     default:
       return score * 1;
   }

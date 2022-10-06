@@ -15,7 +15,7 @@ Column ToggFeedbackWidget({
   return Column(
     children: [
       Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 18),
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: Colors.white,

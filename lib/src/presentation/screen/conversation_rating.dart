@@ -35,7 +35,7 @@ class ConversationRatingScreenUpdated extends HookWidget {
     final size = MediaQuery.of(context).size;
     final opacityController = useState<double>(0);
     final changeFinished = useState<bool>(false);
-    final textEditing = useState<bool>(false);
+
     useEffect(() {
       focusNode = FocusNode();
       return null;
@@ -44,34 +44,29 @@ class ConversationRatingScreenUpdated extends HookWidget {
     return Chatfold(
       appBarElements: [
         Expanded(
-          flex: 2,
           child: ToggBackButton(context),
         ),
         Expanded(
-          flex: 2,
           child: ToggLogo(),
         ),
         const Spacer()
       ],
       scaffoldBackGround: screenGradientElements,
       elements: [
-        if (!textEditing.value)
-          Expanded(
-            flex: 4,
-            child: ToggTitle(message, size),
-          ),
-        if (!textEditing.value)
-          Expanded(
-            flex: 2,
-            child: AnimatedCar(ratingProgress: ratingProgress, size: size),
-          ),
-        if (!textEditing.value)
-          Expanded(
-            flex: 2,
-            child: CarSlider(ratingScore, ratingProgress, changeFinished),
-          ),
         Expanded(
-          flex: 4,
+          flex: 6,
+          child: ToggTitle(message, size),
+        ),
+        Expanded(
+          flex: 2,
+          child: AnimatedCar(ratingProgress: ratingProgress, size: size),
+        ),
+        Expanded(
+          flex: 2,
+          child: CarSlider(ratingScore, ratingProgress, changeFinished),
+        ),
+        Expanded(
+          flex: 5,
           child: ToggRating(
             ratingScore,
             ratingProgress,
@@ -83,11 +78,11 @@ class ConversationRatingScreenUpdated extends HookWidget {
         ),
         if (changeFinished.value)
           SizedBox(
-            height: context.screenHeight / 12,
+            height: context.screenHeight / 10,
           )
         else
           SizedBox(
-            height: context.screenHeight / 12,
+            height: context.screenHeight / 10,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: ReflectedTexts(message, ratingScore),
@@ -103,7 +98,6 @@ class ConversationRatingScreenUpdated extends HookWidget {
                 sendFeedback(ratingScore, context);
               }
             },
-            tap: () => textEditing.value = !textEditing.value,
             send: () => sendFeedback(ratingScore, context),
             ratingScore: ratingScore,
             focus: focusNode,

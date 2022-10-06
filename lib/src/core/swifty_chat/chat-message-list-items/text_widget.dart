@@ -67,7 +67,7 @@ class TextContainer extends HookWidget {
       topRight: Radius.circular(_messageBorderRadius),
     );
     final expand = useState<bool>(
-      message.messageKind.text!.length <= _theme.maxMessageLength!,
+      (message.messageKind.text?.length ?? 0) <= (_theme.maxMessageLength ?? 0),
     );
 
     return Container(
@@ -81,17 +81,25 @@ class TextContainer extends HookWidget {
         child: AbsorbPointer(
           absorbing: expand.value,
           child: InkWell(
-            onTap: () => expand.value = !expand.value,
+            onTap: () => expand.value = true,
             child: RichText(
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: !expand.value
-                        ? message.messageKind.text!
-                        : message.messageKind.text!
-                            .substring(0, _theme.maxMessageLength!),
+                    text: expand.value
+                        ? message.messageKind.text ?? ''
+                        : message.messageKind.text?.substring(
+                              0,
+                              (message.messageKind.text?.length ?? 0) >
+                                      int.parse(
+                                        _theme.maxMessageLength.toString(),
+                                      )
+                                  ? _theme.maxMessageLength
+                                  : message.messageKind.text?.length,
+                            ) ??
+                            '',
                   ),
-                  if (expand.value) ...[
+                  if (!expand.value) ...[
                     const TextSpan(
                       text: "Read More",
                       style: TextStyle(color: Colors.green),

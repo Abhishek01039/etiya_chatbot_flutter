@@ -72,8 +72,10 @@ class EtiyaMessageInput extends StatelessWidget {
             ),
           ).rotate(angle: 150).gestures(
             onTap: () {
-              sendButtonTapped(textEditingController.text);
-              textEditingController.text = "";
+              if (textEditingController.text != "") {
+                sendButtonTapped(textEditingController.text);
+                textEditingController.text = "";
+              }
             },
           )
         ],

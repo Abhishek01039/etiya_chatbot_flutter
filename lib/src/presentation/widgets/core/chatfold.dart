@@ -6,43 +6,45 @@ class Chatfold extends HookWidget {
   final List<Widget> appBarElements, scaffoldBackGround, elements;
   final BoxDecoration? appBarDecoration;
   final Color? color;
-  const Chatfold(
-      {required this.appBarElements,
-      required this.scaffoldBackGround,
-      required this.elements,
-      this.color,
-      this.appBarDecoration});
+  const Chatfold({
+    required this.appBarElements,
+    required this.scaffoldBackGround,
+    required this.elements,
+    this.color,
+    this.appBarDecoration,
+  });
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Center(
-        child: SizedBox(
-          height: context.screenHeight,
-          width: context.screenWidth,
-          child: Scaffold(
-            backgroundColor: color,
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(context.screenHeight / 14.7),
-              child: DecoratedBox(
-                decoration: appBarDecoration ??
-                    BoxDecoration(color: Colors.transparent.withOpacity(0)),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(children: appBarElements),
-                ),
+      
+      child: SizedBox(
+        height: context.screenHeight,
+        width: context.screenWidth,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+         
+          backgroundColor: color,
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(context.screenHeight / 14.7),
+            child: DecoratedBox(
+              decoration: appBarDecoration ??
+                  BoxDecoration(color: Colors.transparent.withOpacity(0)),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(children: appBarElements),
               ),
             ),
-            body: Stack(
-              fit: StackFit.expand,
-              children: [
-                ...scaffoldBackGround,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: elements,
-                )
-              ],
-            ),
+          ),
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
+              ...scaffoldBackGround,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: elements,
+              )
+            ],
           ),
         ),
       ),

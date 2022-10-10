@@ -119,6 +119,9 @@ class ToggChatbotTheme extends ChatTheme {
 
   @override
   BorderRadius get imageBorderRadius => BorderRadius.zero;
+
+  @override
+  int? get maxMessageLength => 40;
 }
 
 class MyHomePage extends StatefulWidget {

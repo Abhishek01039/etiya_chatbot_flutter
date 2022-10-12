@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 Column ToggFeedbackWidget({
   FocusNode? focus,
-  VoidCallback? tap,
+  Future<void> Function()? tap,
   required VoidCallback send,
   onComplete,
   required ValueNotifier<double> ratingScore,
@@ -30,6 +30,9 @@ Column ToggFeedbackWidget({
           ),
           child: SizedBox(
             child: TextField(
+              scrollPadding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
               onEditingComplete: () => onComplete,
               onTap: tap,
               decoration: InputDecoration(

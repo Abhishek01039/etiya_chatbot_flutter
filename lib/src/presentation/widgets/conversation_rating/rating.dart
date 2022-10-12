@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:etiya_chatbot_flutter/src/core/etiya_chatbot_data/models/api/etiya_message_response.dart';
 import 'package:flutter/material.dart';
-import 'package:etiya_chatbot_flutter/src/extensions/context_extension.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 List<Color> rateColors = [
@@ -47,7 +46,8 @@ Widget ToggRating(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5),
+            crossAxisCount: 5,
+          ),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount:
@@ -93,18 +93,20 @@ InkWell ratingElement({
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          padding: EdgeInsets.all(isActive ? 5 : 9),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.white,
-          ),
-          child: FaIcon(
-            icon,
-            color: isActive
-                ? activeColor
-                : const Color(0xff504642).withOpacity(.2),
-            size: isActive ? 26 : 18,
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.all(isActive ? 5 : 9),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
+            ),
+            child: FaIcon(
+              icon,
+              color: isActive
+                  ? activeColor
+                  : const Color(0xff504642).withOpacity(.2),
+              size: isActive ? 26 : 18,
+            ),
           ),
         ),
         const SizedBox(

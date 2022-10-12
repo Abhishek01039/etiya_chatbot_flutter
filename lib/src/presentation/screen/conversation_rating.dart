@@ -42,6 +42,7 @@ class ConversationRatingScreenUpdated extends HookWidget {
     });
 
     return Chatfold(
+      scrollController: controller,
       appBarElements: [
         Expanded(
           child: ToggBackButton(context),
@@ -53,28 +54,22 @@ class ConversationRatingScreenUpdated extends HookWidget {
       ],
       scaffoldBackGround: screenGradientElements,
       elements: [
-        Expanded(
-          flex: 6,
+        SizedBox(
+          height: 100,
           child: ToggTitle(message, size),
         ),
-        Expanded(
-          flex: 2,
+        SizedBox(
+          height: 50,
           child: AnimatedCar(ratingProgress: ratingProgress, size: size),
         ),
-        Expanded(
-          flex: 2,
-          child: CarSlider(ratingScore, ratingProgress, changeFinished),
-        ),
-        Expanded(
-          flex: 5,
-          child: ToggRating(
-            ratingScore,
-            ratingProgress,
-            textIndex,
-            opacityController,
-            changeFinished,
-            message,
-          ),
+        CarSlider(ratingScore, ratingProgress, changeFinished),
+        ToggRating(
+          ratingScore,
+          ratingProgress,
+          textIndex,
+          opacityController,
+          changeFinished,
+          message,
         ),
         if (changeFinished.value)
           SizedBox(
@@ -88,32 +83,36 @@ class ConversationRatingScreenUpdated extends HookWidget {
               child: ReflectedTexts(message, ratingScore),
             ),
           ),
-        Expanded(
-          flex: 6,
-          child: ToggFeedbackWidget(
-            onComplete: () {
-              changeFinished.value = false;
+        ToggFeedbackWidget(
+          tap: () async {
+            await controller.animateTo(
+              controller.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 100),
+              curve: Curves.easeIn,
+            );
+          },
+          onComplete: () {
+            changeFinished.value = false;
 
-              if (feedbackTextController == null) {
-                sendFeedback(ratingScore, context);
-              }
-            },
-            send: () => sendFeedback(ratingScore, context),
-            ratingScore: ratingScore,
-            focus: focusNode,
-            ratingProgress: ratingProgress,
-            chatbotMessage: message,
-            context: context,
-            controller: feedbackTextController,
-          ),
+            if (feedbackTextController == null) {
+              sendFeedback(ratingScore, context);
+            }
+          },
+          send: () => sendFeedback(ratingScore, context),
+          ratingScore: ratingScore,
+          focus: focusNode,
+          ratingProgress: ratingProgress,
+          chatbotMessage: message,
+          context: context,
+          controller: feedbackTextController,
         ),
-        Expanded(
-          flex: 2,
-          child: _submitButton(ratingScore, ratingProgress, context, size),
+        const SizedBox(
+          height: 16,
         ),
-        SizedBox(
-          height: context.screenHeight / 100,
-        )
+        _submitButton(ratingScore, ratingProgress, context, size),
+        const SizedBox(
+          height: 16,
+        ),
       ],
     );
   }
